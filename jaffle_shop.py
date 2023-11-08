@@ -7,24 +7,21 @@ from cosmos.profiles import PostgresUserPasswordProfileMapping
 
 from pathlib import Path
 
-
-# profile_config = ProfileConfig(
-#     profile_name="jaffle_shop",
-#     target_name="dev",
-#     profiles_yml_filepath="/appz/home/airflow/dags/dbt/jaffle_shop/profiles.yml",
-# )
+CONNECTION_ID = "postgres_connection"
+SCHEMA_NAME = "public"
+DB_NAME = "postgres"
 
 profile_config = ProfileConfig(
     profile_name="jaffle_shop",
     target_name="dev",
     profile_mapping=PostgresUserPasswordProfileMapping(
-        conn_id=postgres_connection,
-        profile_args={"schema": public, "dbname": postgres, "threads": 4},
+        conn_id=CONNECTION_ID,
+        profile_args={"schema": SCHEMA_NAME, "dbname": DB_NAME, "threads": 4},
     ),
 )
 
 with DAG(
-    dag_id="extract_dag",
+    dag_id="jaffle_shop_sample",
     start_date=datetime(2023, 10, 24),
     schedule_interval="0 0 * 1 *",
 ):
