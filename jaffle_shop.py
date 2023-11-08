@@ -1,24 +1,27 @@
 from pendulum import datetime
-
 from airflow import DAG
 from airflow.operators.empty import EmptyOperator
 from cosmos import DbtTaskGroup
 from cosmos.config import ProfileConfig, ProjectConfig, ExecutionConfig
+from cosmos.profiles import PostgresUserPasswordProfileMapping
 
 from pathlib import Path
 
 
+# profile_config = ProfileConfig(
+#     profile_name="jaffle_shop",
+#     target_name="dev",
+#     profiles_yml_filepath="/appz/home/airflow/dags/dbt/jaffle_shop/profiles.yml",
+# )
+
 profile_config = ProfileConfig(
     profile_name="jaffle_shop",
     target_name="dev",
-    profiles_yml_filepath="/appz/home/airflow/dags/dbt/jaffle_shop/profiles.yml",
+    profile_mapping=PostgresUserPasswordProfileMapping(
+        conn_id=postgres_connection,
+        profile_args={"schema": public, "dbname": postgres, "threads": 4},
+    ),
 )
-
-#project_config = ProjectConfig(
-#    dbt_project_path="/appz/home/airflow/dags/dbt/jaffle_shop",
-#    models_relative_path="models",
-#    seeds_relative_path="seeds",
-#)
 
 with DAG(
     dag_id="extract_dag",
