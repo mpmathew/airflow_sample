@@ -41,3 +41,4 @@ with DAG(
     e2 = EmptyOperator(task_id="post_dbt")
 
     e1 >> dbt_tg >> e2
+    #end
