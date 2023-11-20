@@ -27,7 +27,7 @@ with DAG(
 ):
     e1 = EmptyOperator(task_id="pre_dbt")
 
-    dbt_tg = DbtTaskGroup(
+     seeds_tg = DbtTaskGroup(
         project_config=ProjectConfig(
         Path("/appz/home/airflow/dags/dbt/jaffle_shop"),
     ),
@@ -36,11 +36,13 @@ with DAG(
         dbt_executable_path="/dbt_venv/bin/dbt",
     ),
         render_config=RenderConfig(
-        exclude=["path:models/staging","path:seeds/"],
+        select=["path:seeds/"],
     ),
         default_args={"retries": 2},
+        group_id = "dbt_seeds_group"
     )
-    stg_tg = DbtTaskGroup(
+
+     stg_tg = DbtTaskGroup(
         project_config=ProjectConfig(
         Path("/appz/home/airflow/dags/dbt/jaffle_shop"),
     ),
@@ -55,6 +57,20 @@ with DAG(
         group_id = "dbt_stg_group"
     )
 
+    dbt_tg = DbtTaskGroup(
+        project_config=ProjectConfig(
+        Path("/appz/home/airflow/dags/dbt/jaffle_shop"),
+    ),
+        profile_config=profile_config,
+        execution_config=ExecutionConfig(
+        dbt_executable_path="/dbt_venv/bin/dbt",
+    ),
+        render_config=RenderConfig(
+        exclude=["path:models/staging","path:seeds/"],
+    ),
+        default_args={"retries": 2},
+    )
+   
     e2 = EmptyOperator(task_id="post_dbt")
 
     e1 >> stg_tg >> dbt_tg >> e2
