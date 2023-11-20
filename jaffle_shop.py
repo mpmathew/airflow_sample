@@ -27,7 +27,7 @@ with DAG(
 ):
     e1 = EmptyOperator(task_id="pre_dbt")
 
-     seeds_tg = DbtTaskGroup(
+    seeds_tg = DbtTaskGroup(
         project_config=ProjectConfig(
         Path("/appz/home/airflow/dags/dbt/jaffle_shop"),
     ),
@@ -42,7 +42,7 @@ with DAG(
         group_id = "dbt_seeds_group"
     )
 
-     stg_tg = DbtTaskGroup(
+    stg_tg = DbtTaskGroup(
         project_config=ProjectConfig(
         Path("/appz/home/airflow/dags/dbt/jaffle_shop"),
     ),
@@ -73,5 +73,5 @@ with DAG(
    
     e2 = EmptyOperator(task_id="post_dbt")
 
-    e1 >> stg_tg >> dbt_tg >> e2
+    e1 >> seeds_tg >> stg_tg >> dbt_tg >> e2
     #end
