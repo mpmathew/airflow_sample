@@ -52,6 +52,7 @@ with DAG(
         select=["path:models/staging"],
     ),
         default_args={"retries": 2},
+        group_id = "dbt_stg_group"
     )
 
     e2 = EmptyOperator(task_id="post_dbt")
