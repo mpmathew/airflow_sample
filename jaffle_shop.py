@@ -40,8 +40,21 @@ with DAG(
     ),
         default_args={"retries": 2},
     )
+    stg_tg = DbtTaskGroup(
+        project_config=ProjectConfig(
+        Path("/appz/home/airflow/dags/dbt/jaffle_shop"),
+    ),
+        profile_config=profile_config,
+        execution_config=ExecutionConfig(
+        dbt_executable_path="/dbt_venv/bin/dbt",
+    ),
+        render_config=RenderConfig(
+        select=["path:models/staging"],
+    ),
+        default_args={"retries": 2},
+    )
 
     e2 = EmptyOperator(task_id="post_dbt")
 
-    e1 >> dbt_tg >> e2
+    e1 >> stg_tg >> dbt_tg >> e2
     #end
