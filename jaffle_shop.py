@@ -36,7 +36,7 @@ with DAG(
         dbt_executable_path="/dbt_venv/bin/dbt",
     ),
         render_config=RenderConfig(
-        exclude=["path:models/staging"],
+        exclude=["path:models/staging","path:seeds/"],
     ),
         default_args={"retries": 2},
     )
