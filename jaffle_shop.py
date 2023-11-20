@@ -1,7 +1,7 @@
 from pendulum import datetime
 from airflow import DAG
 from airflow.operators.empty import EmptyOperator
-from cosmos import DbtTaskGroup
+from cosmos import DbtTaskGroup, RenderConfig
 from cosmos.config import ProfileConfig, ProjectConfig, ExecutionConfig
 from cosmos.profiles import PostgresUserPasswordProfileMapping
 
@@ -34,6 +34,9 @@ with DAG(
         profile_config=profile_config,
         execution_config=ExecutionConfig(
         dbt_executable_path="/dbt_venv/bin/dbt",
+    ),
+        render_config=RenderConfig(
+        exclude=["path:models/staging"],
     ),
         default_args={"retries": 2},
     )
