@@ -1,6 +1,7 @@
 from pendulum import datetime
 from airflow import DAG
 from airflow.operators.empty import EmptyOperator
+from airflow.models import Variable
 from cosmos import DbtTaskGroup, RenderConfig
 from cosmos.config import ProfileConfig, ProjectConfig, ExecutionConfig
 from cosmos.profiles import PostgresUserPasswordProfileMapping
@@ -10,6 +11,7 @@ from pathlib import Path
 CONNECTION_ID = "postgres_connection"
 SCHEMA_NAME = "public"
 DB_NAME = "postgres"
+POSTGRES_PASSWORD = Variable.get("AIRFLOW_POSTGRES_PASSWORD")
 
 profile_config = ProfileConfig(
     profile_name="jaffle_shop",
@@ -28,6 +30,9 @@ with DAG(
         project_config=ProjectConfig(
         Path("/appz/home/airflow/dags/dbt/jaffle_shop"),
     ),
+        operator_args={
+            "env": {"POSTGRES_PASSWORD_POC": POSTGRES_PASSWORD},
+        },
         profile_config=profile_config,
         execution_config=ExecutionConfig(
         dbt_executable_path="/dbt_venv/bin/dbt",
@@ -43,6 +48,9 @@ with DAG(
         project_config=ProjectConfig(
         Path("/appz/home/airflow/dags/dbt/jaffle_shop"),
     ),
+        operator_args={
+            "env": {"POSTGRES_PASSWORD_POC": POSTGRES_PASSWORD},
+        },
         profile_config=profile_config,
         execution_config=ExecutionConfig(
         dbt_executable_path="/dbt_venv/bin/dbt",
@@ -58,6 +66,9 @@ with DAG(
         project_config=ProjectConfig(
         Path("/appz/home/airflow/dags/dbt/jaffle_shop"),
     ),
+        operator_args={
+            "env": {"POSTGRES_PASSWORD_POC": POSTGRES_PASSWORD},
+        },
         profile_config=profile_config,
         execution_config=ExecutionConfig(
         dbt_executable_path="/dbt_venv/bin/dbt",
