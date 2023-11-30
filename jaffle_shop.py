@@ -32,8 +32,7 @@ with DAG(
         Path("/appz/home/airflow/dags/dbt/jaffle_shop"),
     ),
         operator_args={
-            "env":{"POSTGRES_USER_POC":"postgres"},
-            "env":{"POSTGRES_PASSWORD_POC":POSTGRES_PASSWORD},
+            "env":{"POSTGRES_USER_POC":"postgres", "POSTGRES_PASSWORD_POC":POSTGRES_PASSWORD},
         },
         profile_config=profile_config,
         execution_config=ExecutionConfig(
