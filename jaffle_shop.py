@@ -40,6 +40,9 @@ with DAG(
         select=["path:seeds/"],
     ),
         default_args={"retries": 2},
+        schedule_interval="@daily",
+        start_date=datetime(2023, 11, 10),
+        catchup=False,
         dag_id = "dbt_seeds_dag"
     )
 
