@@ -20,6 +20,12 @@ profile_config = ProfileConfig(
     profiles_yml_filepath = "/appz/home/airflow/dags/dbt/jaffle_shop/profiles.yml"
 )
 
+env_vars = {
+    "POSTGRES_PASSWORD": POSTGRES_PASSWORD,
+    "POSTGRES_USER": POSTGRES_USER,
+}
+
+
 with DAG(
     dag_id="jaffle_shop_new",
     start_date=datetime(2023, 11, 10),
@@ -32,10 +38,7 @@ with DAG(
         Path("/appz/home/airflow/dags/dbt/jaffle_shop"),
     ),
         operator_args={
-            "vars":{
-                "POSTGRES_PASSWORD": "{{POSTGRES_PASSWORD}}",
-                "POSTGRES_USER": "{{POSTGRES_USER}}",
-            },
+            "env": env_vars,
         },
         profile_config=profile_config,
         execution_config=ExecutionConfig(
@@ -53,10 +56,7 @@ with DAG(
         Path("/appz/home/airflow/dags/dbt/jaffle_shop"),
     ),
        operator_args={
-            "vars":{
-                "POSTGRES_PASSWORD": "{{POSTGRES_PASSWORD}}",
-                "POSTGRES_USER": "{{POSTGRES_USER}}",
-            },
+            "env": env_vars,
         },
         profile_config=profile_config,
         execution_config=ExecutionConfig(
@@ -74,10 +74,7 @@ with DAG(
         Path("/appz/home/airflow/dags/dbt/jaffle_shop"),
     ),
         operator_args={
-            "vars":{
-                "POSTGRES_PASSWORD": "{{POSTGRES_PASSWORD}}",
-                "POSTGRES_USER": "{{POSTGRES_USER}}",
-            },
+            "env": env_vars,
         },
         profile_config=profile_config,
         execution_config=ExecutionConfig(
