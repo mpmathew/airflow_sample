@@ -33,8 +33,8 @@ with DAG(
     ),
         operator_args={
             "env":{
-                "POSTGRES_PASSWORD": "{{POSTGRES_PASSWORD}}",
-                "POSTGRES_USER": "{{POSTGRES_USER}}",
+                "POSTGRES_PASSWORD": {{POSTGRES_PASSWORD}},
+                "POSTGRES_USER": {{POSTGRES_USER}},
             },
         },
         profile_config=profile_config,
@@ -54,8 +54,8 @@ with DAG(
     ),
         operator_args={
             "env":{
-                "POSTGRES_PASSWORD": "{{POSTGRES_PASSWORD}}",
-                "POSTGRES_USER": "{{POSTGRES_USER}}",
+                "POSTGRES_PASSWORD": {{POSTGRES_PASSWORD}},
+                "POSTGRES_USER": {{POSTGRES_USER}},
             },
         },
         profile_config=profile_config,
@@ -75,8 +75,8 @@ with DAG(
     ),
         operator_args={
             "env":{
-                "POSTGRES_PASSWORD": "{{POSTGRES_PASSWORD}}",
-                "POSTGRES_USER": "{{POSTGRES_USER}}",
+                "POSTGRES_PASSWORD": {{POSTGRES_PASSWORD}},
+                "POSTGRES_USER": {{POSTGRES_USER}},
             },
         },
         profile_config=profile_config,
