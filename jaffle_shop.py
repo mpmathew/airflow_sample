@@ -11,6 +11,7 @@ from pathlib import Path
 CONNECTION_ID = "postgres_connection"
 SCHEMA_NAME = "public"
 DB_NAME = "postgres"
+POSTGRES_USER = "postgres"
 POSTGRES_PASSWORD = Variable.get("AIRFLOW_POSTGRES_PASSWORD")
 
 profile_config = ProfileConfig(
@@ -31,7 +32,7 @@ with DAG(
         Path("/appz/home/airflow/dags/dbt/jaffle_shop"),
     ),
         operator_args={
-            "env": {"POSTGRES_PASSWORD_POC": POSTGRES_PASSWORD},
+            "env": {"POSTGRES_USER_POC": POSTGRES_USER, "POSTGRES_PASSWORD_POC": POSTGRES_PASSWORD},
         },
         profile_config=profile_config,
         execution_config=ExecutionConfig(
