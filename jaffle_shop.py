@@ -2,7 +2,6 @@ from pendulum import datetime
 from airflow import DAG
 from airflow.operators.empty import EmptyOperator
 from cosmos import DbtTaskGroup, RenderConfig
-from cosmos.airflow.dag import DbtDag
 from cosmos.config import ProfileConfig, ProjectConfig, ExecutionConfig
 from cosmos.profiles import PostgresUserPasswordProfileMapping
 
@@ -15,10 +14,7 @@ DB_NAME = "postgres"
 profile_config = ProfileConfig(
     profile_name="jaffle_shop",
     target_name="dev",
-    profile_mapping=PostgresUserPasswordProfileMapping(
-        conn_id=CONNECTION_ID,
-        profile_args={"schema": SCHEMA_NAME, "dbname": DB_NAME, "threads": 4},
-    ),
+    profiles_yml_filepath = "/appz/home/airflow/dags/dbt/jaffle_shop"
 )
 
 with DAG(
@@ -28,7 +24,7 @@ with DAG(
 ):
     e1 = EmptyOperator(task_id="pre_dbt")
 
-    seeds_tg = DbtDag(
+    seeds_tg = DbtTaskGroup(
         project_config=ProjectConfig(
         Path("/appz/home/airflow/dags/dbt/jaffle_shop"),
     ),
@@ -40,10 +36,7 @@ with DAG(
         select=["path:seeds/"],
     ),
         default_args={"retries": 2},
-        schedule_interval="@daily",
-        start_date=datetime(2023, 11, 10),
-        catchup=False,
-        dag_id = "dbt_seeds_dag"
+        group_id = "dbt_seeds_group"
     )
 
     stg_tg = DbtTaskGroup(
