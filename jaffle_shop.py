@@ -32,10 +32,10 @@ with DAG(
         Path("/appz/home/airflow/dags/dbt/jaffle_shop"),
     ),
         operator_args={
-            "env":'{
-                "POSTGRES_PASSWORD": {{POSTGRES_PASSWORD}},
-                "POSTGRES_USER": {{POSTGRES_USER}},
-            }',
+            "vars":{
+                "POSTGRES_PASSWORD": "{{POSTGRES_PASSWORD}}",
+                "POSTGRES_USER": "{{POSTGRES_USER}}",
+            },
         },
         profile_config=profile_config,
         execution_config=ExecutionConfig(
@@ -53,10 +53,10 @@ with DAG(
         Path("/appz/home/airflow/dags/dbt/jaffle_shop"),
     ),
        operator_args={
-            "env":'{
-                "POSTGRES_PASSWORD": {{POSTGRES_PASSWORD}},
-                "POSTGRES_USER": {{POSTGRES_USER}},
-            }',
+            "vars":{
+                "POSTGRES_PASSWORD": "{{POSTGRES_PASSWORD}}",
+                "POSTGRES_USER": "{{POSTGRES_USER}}",
+            },
         },
         profile_config=profile_config,
         execution_config=ExecutionConfig(
@@ -74,10 +74,10 @@ with DAG(
         Path("/appz/home/airflow/dags/dbt/jaffle_shop"),
     ),
         operator_args={
-            "env":'{
-                "POSTGRES_PASSWORD": {{POSTGRES_PASSWORD}},
-                "POSTGRES_USER": {{POSTGRES_USER}},
-            }',
+            "vars":{
+                "POSTGRES_PASSWORD": "{{POSTGRES_PASSWORD}}",
+                "POSTGRES_USER": "{{POSTGRES_USER}}",
+            },
         },
         profile_config=profile_config,
         execution_config=ExecutionConfig(
