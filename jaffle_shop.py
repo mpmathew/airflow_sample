@@ -60,8 +60,8 @@ with DAG(
         project_config=ProjectConfig(
         Path("/appz/home/airflow/dags/dbt/jaffle_shop"),
     ),
-        operator_args={
-            "env": env_vars,
+       operator_args={
+            "append_env": True,
         },
         profile_config=profile_config,
         execution_config=ExecutionConfig(
