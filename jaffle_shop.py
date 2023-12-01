@@ -26,7 +26,7 @@ with DAG(
     ),
         operator_args={
             "append_env": True,
-        }
+        },
         profile_config=profile_config,
         execution_config=ExecutionConfig(
         dbt_executable_path="/dbt_venv/bin/dbt",
