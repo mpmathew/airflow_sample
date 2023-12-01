@@ -5,26 +5,13 @@ from airflow.models import Variable
 from cosmos import DbtTaskGroup, RenderConfig
 from cosmos.config import ProfileConfig, ProjectConfig, ExecutionConfig
 from cosmos.profiles import PostgresUserPasswordProfileMapping
-
 from pathlib import Path
-
-CONNECTION_ID = "postgres_connection"
-SCHEMA_NAME = "public"
-DB_NAME = "postgres"
-POSTGRES_USER = "postgres"
-POSTGRES_PASSWORD = Variable.get("AIRFLOW_POSTGRES_PASSWORD")
 
 profile_config = ProfileConfig(
     profile_name="jaffle_shop",
     target_name="dev",
     profiles_yml_filepath = "/appz/home/airflow/dags/dbt/jaffle_shop/profiles.yml"
 )
-
-env_vars = {
-    "POSTGRES_PASSWORD": POSTGRES_PASSWORD,
-    "POSTGRES_USER": POSTGRES_USER,
-}
-
 
 with DAG(
     dag_id="jaffle_shop_new",
@@ -38,8 +25,8 @@ with DAG(
         Path("/appz/home/airflow/dags/dbt/jaffle_shop"),
     ),
         operator_args={
-            "env": env_vars,
-        },
+            "append_env": True,
+        }
         profile_config=profile_config,
         execution_config=ExecutionConfig(
         dbt_executable_path="/dbt_venv/bin/dbt",
@@ -56,7 +43,7 @@ with DAG(
         Path("/appz/home/airflow/dags/dbt/jaffle_shop"),
     ),
        operator_args={
-            "env": env_vars,
+            "append_env": True,
         },
         profile_config=profile_config,
         execution_config=ExecutionConfig(
