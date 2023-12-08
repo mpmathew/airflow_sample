@@ -6,8 +6,6 @@ from cosmos import DbtTaskGroup, RenderConfig
 from cosmos.config import ProfileConfig, ProjectConfig, ExecutionConfig
 from cosmos.profiles import PostgresUserPasswordProfileMapping
 from pathlib import Path
-POSTGRES_USER = "testuser"
-POSTGRES_PASSWORD = Variable.get('POSTGRES_PASSWORD')
 
 profile_config = ProfileConfig(
     profile_name="jaffle_shop",
