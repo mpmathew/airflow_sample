@@ -6,6 +6,8 @@ from cosmos import DbtTaskGroup, RenderConfig
 from cosmos.config import ProfileConfig, ProjectConfig, ExecutionConfig
 from cosmos.profiles import PostgresUserPasswordProfileMapping
 from pathlib import Path
+POSTGRES_USER = ""
+POSTGRES_PASSWORD = Variable.get('AIRFLOW_POSTGRES_PASSWORD')
 
 profile_config = ProfileConfig(
     profile_name="jaffle_shop",
@@ -24,15 +26,16 @@ with DAG(
         project_config=ProjectConfig(
         Path("/appz/home/airflow/dags/dbt/jaffle_shop"),
     ),
-        operator_args={
-            "append_env": True,
-        },
+        # operator_args={
+        #     "append_env": True,
+        # },
         profile_config=profile_config,
         execution_config=ExecutionConfig(
         dbt_executable_path="/dbt_venv/bin/dbt",
     ),
         render_config=RenderConfig(
         select=["path:seeds/"],
+        env_vars={'POSTGRES_PASSWORD':POSTGRES_PASSWORD, 'POSTGRES_USER':POSTGRES_USER},
     ),
         default_args={"retries": 2},
         group_id = "dbt_seeds_group"
@@ -42,15 +45,16 @@ with DAG(
         project_config=ProjectConfig(
         Path("/appz/home/airflow/dags/dbt/jaffle_shop"),
     ),
-       operator_args={
-            "append_env": True,
-        },
+       # operator_args={
+       #      "append_env": True,
+       #  },
         profile_config=profile_config,
         execution_config=ExecutionConfig(
         dbt_executable_path="/dbt_venv/bin/dbt",
     ),
         render_config=RenderConfig(
         select=["path:models/staging/stg_customers.sql"],
+        env_vars={'POSTGRES_PASSWORD':POSTGRES_PASSWORD, 'POSTGRES_USER':POSTGRES_USER},
     ),
         default_args={"retries": 2},
         group_id = "dbt_stg_group"
@@ -60,15 +64,16 @@ with DAG(
         project_config=ProjectConfig(
         Path("/appz/home/airflow/dags/dbt/jaffle_shop"),
     ),
-       operator_args={
-            "append_env": True,
-        },
+       # operator_args={
+       #      "append_env": True,
+       #  },
         profile_config=profile_config,
         execution_config=ExecutionConfig(
         dbt_executable_path="/dbt_venv/bin/dbt",
     ),
         render_config=RenderConfig(
         exclude=["path:models/staging","path:seeds/"],
+        env_vars={'POSTGRES_PASSWORD':POSTGRES_PASSWORD, 'POSTGRES_USER':POSTGRES_USER},
     ),
         default_args={"retries": 2},
     )
