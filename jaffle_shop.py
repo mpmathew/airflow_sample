@@ -27,7 +27,7 @@ with DAG(
         Path("/appz/home/airflow/dags/dbt/jaffle_shop"),
     ),
         operator_args={
-            # "append_env": True,
+            "append_env": True,
             "env":{'POSTGRES_PASSWORD':POSTGRES_PASSWORD, 'POSTGRES_USER':POSTGRES_USER},
         },
         profile_config=profile_config,
@@ -46,7 +46,7 @@ with DAG(
         Path("/appz/home/airflow/dags/dbt/jaffle_shop"),
     ),
         operator_args={
-            # "append_env": True,
+            "append_env": True,
             "env":{'POSTGRES_PASSWORD':POSTGRES_PASSWORD, 'POSTGRES_USER':POSTGRES_USER},
         },
         profile_config=profile_config,
@@ -64,8 +64,8 @@ with DAG(
         project_config=ProjectConfig(
         Path("/appz/home/airflow/dags/dbt/jaffle_shop"),
     ),
-       operator_args={
-            # "append_env": True,
+        operator_args={
+            "append_env": True,
             "env":{'POSTGRES_PASSWORD':POSTGRES_PASSWORD, 'POSTGRES_USER':POSTGRES_USER},
         },
         profile_config=profile_config,
