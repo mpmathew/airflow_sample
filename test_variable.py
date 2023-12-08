@@ -35,7 +35,7 @@ def convert_all_variables_to_environment_variables(**kwargs):
         airflow_vars = {var.key: var.val for var in session.query(Variable)}
     
         Convert each Airflow variable to an OS environment variable
-        for var_name in airflow_variables:
+        for var_name in airflow_vars:
             var_value = Variable.get(var_name)
             os.environ[var_name] = var_value
     
