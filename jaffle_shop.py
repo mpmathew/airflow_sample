@@ -2,6 +2,7 @@ from pendulum import datetime
 from airflow import DAG
 from airflow.operators.empty import EmptyOperator
 from airflow.models import Variable
+from cosmos.constants import LoadMode
 from cosmos import DbtTaskGroup, RenderConfig
 from cosmos.config import ProfileConfig, ProjectConfig, ExecutionConfig
 from cosmos.profiles import PostgresUserPasswordProfileMapping
@@ -34,6 +35,7 @@ with DAG(
         dbt_executable_path="/dbt_venv/bin/dbt",
     ),
         render_config=RenderConfig(
+        load_method=LoadMode.DBT_LS,
         select=["path:seeds/"],
         env_vars:{'POSTGRES_PASSWORD':POSTGRES_PASSWORD, 'POSTGRES_USER':POSTGRES_USER},
     ),
@@ -53,6 +55,7 @@ with DAG(
         dbt_executable_path="/dbt_venv/bin/dbt",
     ),
         render_config=RenderConfig(
+        load_method=LoadMode.DBT_LS,
         select=["path:models/staging/stg_customers.sql"],
         env_vars:{'POSTGRES_PASSWORD':POSTGRES_PASSWORD, 'POSTGRES_USER':POSTGRES_USER},
     ),
@@ -72,6 +75,7 @@ with DAG(
         dbt_executable_path="/dbt_venv/bin/dbt",
     ),
         render_config=RenderConfig(
+        load_method=LoadMode.DBT_LS,
         exclude=["path:models/staging","path:seeds/"],
         env_vars:{'POSTGRES_PASSWORD':POSTGRES_PASSWORD, 'POSTGRES_USER':POSTGRES_USER},
     ),
