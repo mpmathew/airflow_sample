@@ -7,13 +7,12 @@ from cosmos.config import ProfileConfig, ProjectConfig, ExecutionConfig
 from cosmos.profiles import PostgresUserPasswordProfileMapping
 from pathlib import Path
 POSTGRES_USER = "testuser"
-POSTGRES_PASSWORD = Variable.get('AIRFLOW_POSTGRES_PASSWORD')
+POSTGRES_PASSWORD = Variable.get('POSTGRES_PASSWORD')
 
 profile_config = ProfileConfig(
     profile_name="jaffle_shop",
     target_name="dev",
     profiles_yml_filepath = "/appz/home/airflow/dags/dbt/jaffle_shop/profiles.yml",
-    env_vars={'POSTGRES_PASSWORD':POSTGRES_PASSWORD, 'POSTGRES_USER':POSTGRES_USER},
 )
 
 with DAG(
@@ -27,9 +26,9 @@ with DAG(
         project_config=ProjectConfig(
         Path("/appz/home/airflow/dags/dbt/jaffle_shop"),
     ),
-        # operator_args={
-        #     "append_env": True,  
-        # },
+        operator_args={
+            "append_env": True,
+        },
         profile_config=profile_config,
         execution_config=ExecutionConfig(
         dbt_executable_path="/dbt_venv/bin/dbt",
@@ -45,9 +44,9 @@ with DAG(
         project_config=ProjectConfig(
         Path("/appz/home/airflow/dags/dbt/jaffle_shop"),
     ),
-        # operator_args={
-        #     "append_env": True,  
-        # },
+        operator_args={
+            "append_env": True,  
+        },
         profile_config=profile_config,
         execution_config=ExecutionConfig(
         dbt_executable_path="/dbt_venv/bin/dbt",
@@ -63,9 +62,9 @@ with DAG(
         project_config=ProjectConfig(
         Path("/appz/home/airflow/dags/dbt/jaffle_shop"),
     ),
-        # operator_args={
-        #     "append_env": True,  
-        # },
+        operator_args={
+            "append_env": True,  
+        },
         profile_config=profile_config,
         execution_config=ExecutionConfig(
         dbt_executable_path="/dbt_venv/bin/dbt",
