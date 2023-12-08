@@ -13,7 +13,8 @@ POSTGRES_PASSWORD = Variable.get('AIRFLOW_POSTGRES_PASSWORD')
 profile_config = ProfileConfig(
     profile_name="jaffle_shop",
     target_name="dev",
-    profiles_yml_filepath = "/appz/home/airflow/dags/dbt/jaffle_shop/profiles.yml"
+    profiles_yml_filepath = "/appz/home/airflow/dags/dbt/jaffle_shop/profiles.yml",
+    env_vars={'POSTGRES_PASSWORD':POSTGRES_PASSWORD, 'POSTGRES_USER':POSTGRES_USER},
 )
 
 with DAG(
@@ -37,7 +38,6 @@ with DAG(
         render_config=RenderConfig(
         load_method=LoadMode.DBT_LS,
         select=["path:seeds/"],
-        env_vars={'POSTGRES_PASSWORD':POSTGRES_PASSWORD, 'POSTGRES_USER':POSTGRES_USER},
     ),
         default_args={"retries": 2},
         group_id = "dbt_seeds_group"
@@ -57,7 +57,6 @@ with DAG(
         render_config=RenderConfig(
         load_method=LoadMode.DBT_LS,
         select=["path:models/staging/stg_customers.sql"],
-        env_vars={'POSTGRES_PASSWORD':POSTGRES_PASSWORD, 'POSTGRES_USER':POSTGRES_USER},
     ),
         default_args={"retries": 2},
         group_id = "dbt_stg_group"
@@ -77,7 +76,6 @@ with DAG(
         render_config=RenderConfig(
         load_method=LoadMode.DBT_LS,
         exclude=["path:models/staging","path:seeds/"],
-        env_vars={'POSTGRES_PASSWORD':POSTGRES_PASSWORD, 'POSTGRES_USER':POSTGRES_USER},
     ),
         default_args={"retries": 2},
     )
