@@ -26,7 +26,6 @@ with DAG(
     ),
         operator_args={
             "append_env": True,
-            #"dbt_cmd_flags": ["--vars", "env_vars: ", "{{ from_yaml_file('dev_vars.yml') }}"],
         },
         profile_config=profile_config,
         execution_config=ExecutionConfig(
@@ -44,8 +43,7 @@ with DAG(
         Path("/appz/home/airflow/dags/dbt/jaffle_shop"),
     ),
         operator_args={
-            "append_env": True, 
-           #"dbt_cmd_flags": ["--vars", "env_vars: ", "{{ from_yaml_file('dev_vars.yml') }}"],
+            "append_env": True,
         },
         profile_config=profile_config,
         execution_config=ExecutionConfig(
@@ -64,7 +62,6 @@ with DAG(
     ),
         operator_args={
             "append_env": True,
-            #"dbt_cmd_flags": ["--vars", "env_vars: ", "{{ from_yaml_file('dev_vars.yml') }}"],
         },
         profile_config=profile_config,
         execution_config=ExecutionConfig(
