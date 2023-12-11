@@ -50,7 +50,7 @@ with DAG(
         dbt_executable_path="/dbt_venv/bin/dbt",
     ),
         render_config=RenderConfig(
-        select=["path:models/staging/stg_customers.sql"],
+        select=["path:models/staging/"],
     ),
         default_args={"retries": 2},
         group_id = "dbt_stg_group"
