@@ -1,4 +1,5 @@
-create_forestfire_table = """
+create_forestfire_table = ["""USE PUBLIC""",
+                           """
     CREATE OR REPLACE TRANSIENT TABLE {{ params.table_name }}
         (
             id INT,
@@ -15,7 +16,7 @@ create_forestfire_table = """
             rain FLOAT,
             area FLOAT
         );
-"""
+"""]
 
 create_cost_table = """
     CREATE OR REPLACE TRANSIENT TABLE {{ params.table_name }}
