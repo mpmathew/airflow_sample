@@ -48,7 +48,7 @@ with DAG(
     create_cost_table = SnowflakeOperator(
         task_id="create_cost_table",
         sql=sql_stmts.create_cost_table,
-        params={"table_name": SNOWFLAKE_COST_TABLE},
+        params={"table_name": SNOWFLAKE_COST_TABLE, "schema_name": SNOWFLAKE_SCHEMA},
     )
 
     create_forestfire_cost_table = SnowflakeOperator(
