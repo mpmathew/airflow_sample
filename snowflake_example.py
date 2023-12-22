@@ -15,6 +15,7 @@ import test_sql as sql_stmts
 SNOWFLAKE_FORESTFIRE_TABLE = "forestfires"
 SNOWFLAKE_COST_TABLE = "costs"
 SNOWFLAKE_FORESTFIRE_COST_TABLE = "forestfire_costs"
+SNOWFLAKE_SCHEMA = "TEST_DEV_DB.TEST_SCHEMA"
 
 SNOWFLAKE_CONN_ID = "snowflake_connection"
 
@@ -41,7 +42,7 @@ with DAG(
     create_forestfire_table = SnowflakeOperator(
         task_id="create_forestfire_table",
         sql=sql_stmts.create_forestfire_table,
-        params={"table_name": SNOWFLAKE_FORESTFIRE_TABLE},
+        params={"table_name": SNOWFLAKE_FORESTFIRE_TABLE, "schema_name": SNOWFLAKE_SCHEMA},
     )
 
     create_cost_table = SnowflakeOperator(
@@ -53,7 +54,7 @@ with DAG(
     create_forestfire_cost_table = SnowflakeOperator(
         task_id="create_forestfire_cost_table",
         sql=sql_stmts.create_forestfire_cost_table,
-        params={"table_name": SNOWFLAKE_FORESTFIRE_COST_TABLE},
+        params={"table_name": SNOWFLAKE_FORESTFIRE_COST_TABLE, "schema_name": SNOWFLAKE_SCHEMA},
     )
 
     """
@@ -64,19 +65,19 @@ with DAG(
     load_forestfire_data = SnowflakeOperator(
         task_id="load_forestfire_data",
         sql=sql_stmts.load_forestfire_data,
-        params={"table_name": SNOWFLAKE_FORESTFIRE_TABLE},
+        params={"table_name": SNOWFLAKE_FORESTFIRE_TABLE, "schema_name": SNOWFLAKE_SCHEMA},
     )
 
     load_cost_data = SnowflakeOperator(
         task_id="load_cost_data",
         sql=sql_stmts.load_cost_data,
-        params={"table_name": SNOWFLAKE_COST_TABLE},
+        params={"table_name": SNOWFLAKE_COST_TABLE, "schema_name": SNOWFLAKE_SCHEMA},
     )
 
     load_forestfire_cost_data = SnowflakeOperator(
         task_id="load_forestfire_cost_data",
         sql=sql_stmts.load_forestfire_cost_data,
-        params={"table_name": SNOWFLAKE_FORESTFIRE_COST_TABLE},
+        params={"table_name": SNOWFLAKE_FORESTFIRE_COST_TABLE, "schema_name": SNOWFLAKE_SCHEMA},
     )
 
     """
@@ -87,7 +88,7 @@ with DAG(
     transform_forestfire_cost_table = SnowflakeOperator(
         task_id="transform_forestfire_cost_table",
         sql=sql_stmts.transform_forestfire_cost_table,
-        params={"table_name": SNOWFLAKE_FORESTFIRE_COST_TABLE},
+        params={"table_name": SNOWFLAKE_FORESTFIRE_COST_TABLE, "schema_name": SNOWFLAKE_SCHEMA},
     )
 
     """
@@ -193,19 +194,19 @@ with DAG(
     delete_forestfire_table = SnowflakeOperator(
         task_id="delete_forestfire_table",
         sql="delete_table.sql",
-        params={"table_name": SNOWFLAKE_FORESTFIRE_TABLE},
+        params={"table_name": SNOWFLAKE_FORESTFIRE_TABLE, "schema_name": SNOWFLAKE_SCHEMA},
     )
 
     delete_cost_table = SnowflakeOperator(
         task_id="delete_costs_table",
         sql="delete_table.sql",
-        params={"table_name": SNOWFLAKE_COST_TABLE},
+        params={"table_name": SNOWFLAKE_COST_TABLE, "schema_name": SNOWFLAKE_SCHEMA},
     )
 
     delete_forestfire_cost_table = SnowflakeOperator(
         task_id="delete_forestfire_cost_table",
         sql="delete_table.sql",
-        params={"table_name": SNOWFLAKE_FORESTFIRE_COST_TABLE},
+        params={"table_name": SNOWFLAKE_FORESTFIRE_COST_TABLE, "schema_name": SNOWFLAKE_SCHEMA},
     )
 
     begin = EmptyOperator(task_id="begin")
