@@ -1,4 +1,4 @@
-create_forestfire_table = ["""USE PUBLIC""",
+create_forestfire_table = ["""USE PUBLIC;""",
                            """
     CREATE OR REPLACE TRANSIENT TABLE {{ params.table_name }}
         (
