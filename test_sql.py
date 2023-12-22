@@ -1,4 +1,4 @@
-create_forestfire_table = ["""USE TEST_DEV_DB.PUBLIC;""",
+create_forestfire_table = ["""USE TEST_DEV_DB.TEST_SCHEMA;""",
                            """
     CREATE OR REPLACE TRANSIENT TABLE {{ params.table_name }}
         (
