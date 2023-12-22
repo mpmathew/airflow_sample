@@ -107,7 +107,7 @@ with DAG(
         """
         forestfire_column_checks = SQLColumnCheckOperator(
             task_id="forestfire_column_checks",
-            table=SNOWFLAKE_FORESTFIRE_TABLE,
+            table=f"{SNOWFLAKE_SCHEMA}.{SNOWFLAKE_FORESTFIRE_TABLE}",
             column_mapping={
                 "ID": {"null_check": {"equal_to": 0}},
                 "RH": {"max": {"leq_to": 100}},
@@ -120,7 +120,7 @@ with DAG(
         """
         forestfire_table_checks = SQLTableCheckOperator(
             task_id="forestfire_table_checks",
-            table=SNOWFLAKE_FORESTFIRE_TABLE,
+            table=f"{SNOWFLAKE_SCHEMA}.{SNOWFLAKE_FORESTFIRE_TABLE}",
             checks={"row_count_check": {"check_statement": ROW_COUNT_CHECK}},
         )
 
@@ -136,7 +136,7 @@ with DAG(
         """
         cost_column_checks = SQLColumnCheckOperator(
             task_id="cost_column_checks",
-            table=SNOWFLAKE_COST_TABLE,
+            table=f"{SNOWFLAKE_SCHEMA}.{SNOWFLAKE_COST_TABLE}",
             column_mapping={
                 "ID": {"null_check": {"equal_to": 0}},
                 "LAND_DAMAGE_COST": {"min": {"geq_to": 0}},
@@ -151,7 +151,7 @@ with DAG(
         """
         cost_table_checks = SQLTableCheckOperator(
             task_id="cost_table_checks",
-            table=SNOWFLAKE_COST_TABLE,
+            table=f"{SNOWFLAKE_SCHEMA}.{SNOWFLAKE_COST_TABLE}",
             checks={"row_count_check": {"check_statement": ROW_COUNT_CHECK}},
         )
 
@@ -167,7 +167,7 @@ with DAG(
         """
         forestfire_costs_column_checks = SQLColumnCheckOperator(
             task_id="forestfire_costs_column_checks",
-            table=SNOWFLAKE_FORESTFIRE_COST_TABLE,
+            table=f"{SNOWFLAKE_SCHEMA}.{SNOWFLAKE_FORESTFIRE_COST_TABLE}",
             column_mapping={"AREA": {"min": {"geq_to": 0}}},
         )
 
@@ -177,7 +177,7 @@ with DAG(
         """
         forestfire_costs_table_checks = SQLTableCheckOperator(
             task_id="forestfire_costs_table_checks",
-            table=SNOWFLAKE_FORESTFIRE_COST_TABLE,
+            table=f"{SNOWFLAKE_SCHEMA}.{SNOWFLAKE_FORESTFIRE_COST_TABLE}",
             checks={
                 "row_count_check": {"check_statement": ROW_COUNT_CHECK},
                 "total_cost_check": {
