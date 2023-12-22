@@ -1,5 +1,4 @@
-create_forestfire_table = ["""USE TEST_DEV_DB.TEST_SCHEMA;""",
-                           """
+create_forestfire_table = """
     CREATE OR REPLACE TRANSIENT TABLE {{ params.table_name }}
         (
             id INT,
@@ -16,7 +15,7 @@ create_forestfire_table = ["""USE TEST_DEV_DB.TEST_SCHEMA;""",
             rain FLOAT,
             area FLOAT
         );
-"""]
+"""
 
 create_cost_table = """
     CREATE OR REPLACE TRANSIENT TABLE {{ params.table_name }}
