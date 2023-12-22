@@ -1,4 +1,5 @@
-create_forestfire_table = """
+create_forestfire_table = ["""USE {{ params.schema_name }};""",
+                           """
     CREATE OR REPLACE TRANSIENT TABLE {{ params.table_name }}
         (
             id INT,
@@ -15,9 +16,10 @@ create_forestfire_table = """
             rain FLOAT,
             area FLOAT
         );
-"""
+"""]
 
-create_cost_table = """
+create_cost_table = ["""USE {{ params.schema_name }};""",
+                     """
     CREATE OR REPLACE TRANSIENT TABLE {{ params.table_name }}
         (
             id INT,
@@ -25,9 +27,10 @@ create_cost_table = """
             property_damage_cost INT,
             lost_profits_cost INT
         );
-"""
+"""]
 
-create_forestfire_cost_table = """
+create_forestfire_cost_table = ["""USE {{ params.schema_name }};""",
+                                """
     CREATE OR REPLACE TRANSIENT TABLE {{ params.table_name }}
         (
             id INT,
@@ -40,9 +43,10 @@ create_forestfire_cost_table = """
             day VARCHAR(25),
             area FLOAT
         );
-"""
+"""]
 
-load_forestfire_data = """
+load_forestfire_data = ["""USE {{ params.schema_name }};""",
+                        """
     INSERT INTO {{ params.table_name }} VALUES
         (1,2,'aug','fri',91,166.9,752.6,7.1,25.9,41,3.6,0,100),
         (2,2,'feb','mon',84,9.3,34,2.1,13.9,40,5.4,0,57.8),
@@ -53,9 +57,10 @@ load_forestfire_data = """
         (7,5,'mar','fri',86.2,26.2,94.3,5.1,8.2,51,6.7,0,14),
         (8,6,'mar','fri',91.7,33.3,77.5,9,8.3,97,4,0.2,74.5),
         (9,9,'feb','thu',84.2,6.8,26.6,7.7,6.7,79,3.1,0,8880.7);
-"""
+"""]
 
-load_cost_data = """
+load_cost_data = ["""USE {{ params.schema_name }};""",
+                  """
     INSERT INTO {{ params.table_name }} VALUES
         (1,150000,32000,10000),
         (2,200000,50000,50000),
@@ -66,9 +71,10 @@ load_cost_data = """
         (7,50000,2500000,0),
         (8,8000000,33000000,0),
         (9,6325000,450000,76000);
-"""
+"""]
 
-load_forestfire_cost_data = """
+load_forestfire_cost_data = ["""USE {{ params.schema_name }};""",
+                             """
     INSERT INTO forestfire_costs (
             id, land_damage_cost, property_damage_cost, lost_profits_cost,
             total_cost, y, month, day, area
@@ -86,9 +92,10 @@ load_forestfire_cost_data = """
         FROM costs c
         LEFT JOIN forestfires ff
             ON c.id = ff.id
-"""
+"""]
 
-transform_forestfire_cost_table = """
+transform_forestfire_cost_table = ["""USE {{ params.schema_name }};""",
+                                   """
     SELECT
         id,
         month,
@@ -97,4 +104,4 @@ transform_forestfire_cost_table = """
         area,
         total_cost / area as cost_per_area
     FROM {{ params.table_name }}
-"""
+"""]
