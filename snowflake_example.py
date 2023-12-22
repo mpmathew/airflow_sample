@@ -8,7 +8,7 @@ from airflow.providers.common.sql.operators.sql import (
 from airflow.providers.snowflake.operators.snowflake import SnowflakeOperator
 from pendulum import datetime
 from airflow.utils.task_group import TaskGroup
-import test_sql as sql_stmts
+import .test_sql as sql_stmts
 
 SNOWFLAKE_FORESTFIRE_TABLE = "forestfires"
 SNOWFLAKE_COST_TABLE = "costs"
@@ -28,7 +28,7 @@ with DAG(
     start_date=datetime(2022, 12, 1),
     schedule=None,
     # defining the directory where SQL templates are stored
-    template_searchpath="/usr/local/airflow/include/sql/",
+    template_searchpath="/appz/home/airflow/dags/airflow_dags",
     catchup=False,
 ) as dag:
     """
