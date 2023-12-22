@@ -8,7 +8,9 @@ from airflow.providers.common.sql.operators.sql import (
 from airflow.providers.snowflake.operators.snowflake import SnowflakeOperator
 from pendulum import datetime
 from airflow.utils.task_group import TaskGroup
-from appz.home.airflow.dags.airflow_dags.test_sql import test_sql as sql_stmts
+import sys
+sys.path.append('/appz/home/airflow/dags/airflow_dags/')
+import test_sql as sql_stmts
 
 SNOWFLAKE_FORESTFIRE_TABLE = "forestfires"
 SNOWFLAKE_COST_TABLE = "costs"
