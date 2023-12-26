@@ -25,11 +25,16 @@ with DAG(
         task_id="create_udf",
         sql="create_addone_udf.sql",
     )
+  create_sp = SnowflakeOperator(
+        task_id="create_sp",
+        sql="create_stored_procedure.sql",
+    )
   begin = EmptyOperator(task_id="begin")
   end = EmptyOperator(task_id="end")
 
   chain(
       begin,
       create_udf,
+      create_sp,
       end,
  )
