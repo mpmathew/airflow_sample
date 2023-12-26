@@ -17,13 +17,13 @@ with DAG(
     default_args={"snowflake_conn_id": SNOWFLAKE_CONN_ID},
     schedule=None,
     # defining the directory where SQL templates are stored
-    template_searchpath="/appz/home/airflow/dags/airflow_dags/",
+    template_searchpath="/appz/home/airflow/dags/dbt/jaffle_shop/objects/",
     catchup=False,
 ) as dag:
 
   create_udf = SnowflakeOperator(
         task_id="create_udf",
-        sql="test.sql",
+        sql="create_addone_udf.sql",
     )
   begin = EmptyOperator(task_id="begin")
   end = EmptyOperator(task_id="end")
