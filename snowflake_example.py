@@ -9,8 +9,8 @@ from airflow.providers.snowflake.operators.snowflake import SnowflakeOperator
 from pendulum import datetime
 from airflow.utils.task_group import TaskGroup
 import sys
-sys.path.append('/appz/home/airflow/dags/airflow_dags/')
-import test_sql as sql_stmts
+#sys.path.append('/appz/home/airflow/dags/airflow_dags/')
+#import test_sql as sql_stmts
 
 SNOWFLAKE_FORESTFIRE_TABLE = "forestfires"
 SNOWFLAKE_COST_TABLE = "costs"
@@ -41,19 +41,19 @@ with DAG(
     """
     create_forestfire_table = SnowflakeOperator(
         task_id="create_forestfire_table",
-        sql=sql_stmts.create_forestfire_table,
+        sql="create_forestfire_table.sql",
         params={"table_name": SNOWFLAKE_FORESTFIRE_TABLE, "schema_name": SNOWFLAKE_SCHEMA},
     )
 
     create_cost_table = SnowflakeOperator(
         task_id="create_cost_table",
-        sql=sql_stmts.create_cost_table,
+        sql="create_cost_table.sql",
         params={"table_name": SNOWFLAKE_COST_TABLE, "schema_name": SNOWFLAKE_SCHEMA},
     )
 
     create_forestfire_cost_table = SnowflakeOperator(
         task_id="create_forestfire_cost_table",
-        sql=sql_stmts.create_forestfire_cost_table,
+        sql="create_forestfire_cost_table.sql",
         params={"table_name": SNOWFLAKE_FORESTFIRE_COST_TABLE, "schema_name": SNOWFLAKE_SCHEMA},
     )
 
@@ -64,19 +64,19 @@ with DAG(
     """
     load_forestfire_data = SnowflakeOperator(
         task_id="load_forestfire_data",
-        sql=sql_stmts.load_forestfire_data,
+        sql="load_forestfire_data.sql",
         params={"table_name": SNOWFLAKE_FORESTFIRE_TABLE, "schema_name": SNOWFLAKE_SCHEMA},
     )
 
     load_cost_data = SnowflakeOperator(
         task_id="load_cost_data",
-        sql=sql_stmts.load_cost_data,
+        sql="load_cost_data,.sql"
         params={"table_name": SNOWFLAKE_COST_TABLE, "schema_name": SNOWFLAKE_SCHEMA},
     )
 
     load_forestfire_cost_data = SnowflakeOperator(
         task_id="load_forestfire_cost_data",
-        sql=sql_stmts.load_forestfire_cost_data,
+        sql="load_forestfire_cost_data.sql",
         params={"table_name": SNOWFLAKE_FORESTFIRE_COST_TABLE, "schema_name": SNOWFLAKE_SCHEMA},
     )
 
@@ -87,7 +87,7 @@ with DAG(
     """
     transform_forestfire_cost_table = SnowflakeOperator(
         task_id="transform_forestfire_cost_table",
-        sql=sql_stmts.transform_forestfire_cost_table,
+        sql="transform_forestfire_cost_table.sql",
         params={"table_name": SNOWFLAKE_FORESTFIRE_COST_TABLE, "schema_name": SNOWFLAKE_SCHEMA},
     )
 
