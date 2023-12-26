@@ -1,31 +1,12 @@
-USE SCHEMA TEST_DEV_DB.TEST_SCHEMA;
-
-CREATE TABLE IF NOT EXISTS my_table (
-    id INT,
-    first_name STRING,
-    last_name STRING
-);
-
-INSERT INTO my_table VALUES
-    (1, 'John', 'Doe'),
-    (2, 'Jane', 'Smith');
-	
-CREATE OR REPLACE FUNCTION concatenate_names(first_name STRING, last_name STRING)
-    RETURNS STRING
-    LANGUAGE JAVASCRIPT
-    EXECUTE AS CALLER
-AS
+CREATE OR REPLACE FUNCTION addone(i int)
+RETURNS INT
+LANGUAGE PYTHON
+RUNTIME_VERSION = '3.8'
+HANDLER = 'addone_py'
+as
 $$
-    // JavaScript code for concatenating names
-    function concatenate_names(first_name, last_name) {
-        return first_name + ' ' + last_name;
-    }
+def addone_py(i):
+  return i+1
 $$;
 
-SELECT
-    id,
-    first_name,
-    last_name,
-    concatenate_names(first_name, last_name) AS full_name
-FROM
-    my_table;
+SELECT addone(3);
