@@ -70,7 +70,7 @@ with DAG(
 
     load_cost_data = SnowflakeOperator(
         task_id="load_cost_data",
-        sql="load_cost_data,.sql"
+        sql="load_cost_data.sql"
         params={"table_name": SNOWFLAKE_COST_TABLE, "schema_name": SNOWFLAKE_SCHEMA},
     )
 
