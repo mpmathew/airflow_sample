@@ -21,8 +21,8 @@ with DAG(
     catchup=False,
 ) as dag:
 
-  create_forestfire_table = SnowflakeOperator(
-        task_id="create_mytable",
+  create_udf = SnowflakeOperator(
+        task_id="create_udf",
         sql="test.sql",
     )
   begin = EmptyOperator(task_id="begin")
@@ -30,6 +30,6 @@ with DAG(
 
   chain(
       begin,
-      create_forestfire_table,
+      create_udf,
       end,
  )
