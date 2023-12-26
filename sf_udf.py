@@ -29,6 +29,7 @@ with DAG(
   end = EmptyOperator(task_id="end")
 
   chain(
-        begin,
-        end,
+      begin,
+      create_forestfire_table,
+      end,
  )
