@@ -28,7 +28,7 @@ with DAG(
   begin = EmptyOperator(task_id="begin")
   end = EmptyOperator(task_id="end")
 
- chain(
+  chain(
         begin,
         end,
  )
