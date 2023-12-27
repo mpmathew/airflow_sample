@@ -11,7 +11,7 @@ SNOWFLAKE_SCHEMA = "TEST_DEV_DB.TEST_SCHEMA"
 with DAG(
     "sf_udf",
     description="""
-        Example DAG for udf in Snowflake.
+        Example DAG for udf, stored procedure and stream in Snowflake.
     """,
     doc_md=__doc__,
     start_date=datetime(2022, 12, 1),
