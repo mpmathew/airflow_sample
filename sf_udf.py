@@ -6,6 +6,7 @@ from pendulum import datetime
 from airflow.utils.task_group import TaskGroup
 
 SNOWFLAKE_CONN_ID = "snowflake_connection"
+SNOWFLAKE_SCHEMA = "TEST_DEV_DB.TEST_SCHEMA"
 
 with DAG(
     "sf_udf",
@@ -24,14 +25,17 @@ with DAG(
   create_udf = SnowflakeOperator(
         task_id="create_udf",
         sql="create_addone_udf.sql",
+        params={"schema_name": SNOWFLAKE_SCHEMA},
     )
   create_sp = SnowflakeOperator(
         task_id="create_sp",
         sql="create_stored_procedure.sql",
+        params={"schema_name": SNOWFLAKE_SCHEMA},
     )
   create_stream = SnowflakeOperator(
         task_id="create_stream",
         sql="create_stream.sql",
+        params={"schema_name": SNOWFLAKE_SCHEMA},
     )
   begin = EmptyOperator(task_id="begin")
   end = EmptyOperator(task_id="end")
