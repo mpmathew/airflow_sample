@@ -9,7 +9,7 @@ SNOWFLAKE_CONN_ID = "snowflake_connection"
 SNOWFLAKE_SCHEMA = "TEST_DEV_DB.TEST_SCHEMA"
 
 with DAG(
-    "sf_udf",
+    "sf_objects",
     description="""
         Example DAG for udf, stored procedure and stream in Snowflake.
     """,
