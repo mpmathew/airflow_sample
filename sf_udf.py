@@ -29,6 +29,10 @@ with DAG(
         task_id="create_sp",
         sql="create_stored_procedure.sql",
     )
+  create_stream = SnowflakeOperator(
+        task_id="create_stream",
+        sql="create_stream.sql",
+    )
   begin = EmptyOperator(task_id="begin")
   end = EmptyOperator(task_id="end")
 
@@ -36,5 +40,6 @@ with DAG(
       begin,
       create_udf,
       create_sp,
+      create_stream,
       end,
  )
