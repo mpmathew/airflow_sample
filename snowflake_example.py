@@ -8,9 +8,6 @@ from airflow.providers.common.sql.operators.sql import (
 from airflow.providers.snowflake.operators.snowflake import SnowflakeOperator
 from pendulum import datetime
 from airflow.utils.task_group import TaskGroup
-import sys
-#sys.path.append('/appz/home/airflow/dags/airflow_dags/')
-#import test_sql as sql_stmts
 
 SNOWFLAKE_FORESTFIRE_TABLE = "forestfires"
 SNOWFLAKE_COST_TABLE = "costs"
@@ -32,7 +29,7 @@ with DAG(
     default_args={"snowflake_conn_id": SNOWFLAKE_CONN_ID},
     schedule=None,
     # defining the directory where SQL templates are stored
-    template_searchpath="/appz/home/airflow/dags/dbt/jaffle_shop/objects/",
+    template_searchpath="/appz/home/airflow/dags/dbt/jaffle_shop/objects/tables/",
     catchup=False,
 ) as dag:
     """
@@ -41,7 +38,7 @@ with DAG(
     """
     create_forestfire_table = SnowflakeOperator(
         task_id="create_forestfire_table",
-        sql="tables/create_forestfire_table.sql",
+        sql="create_forestfire_table.sql",
         params={"table_name": SNOWFLAKE_FORESTFIRE_TABLE, "schema_name": SNOWFLAKE_SCHEMA},
     )
 
