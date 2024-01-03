@@ -35,6 +35,7 @@ with DAG(
     ),
         operator_args={
             "append_env": True,
+            "dbt_cmd_global_flags": ["--cache-selected-only"],
         },
         profile_config=profile_config,
         execution_config=ExecutionConfig(
@@ -53,6 +54,7 @@ with DAG(
     ),
         operator_args={
             "append_env": True,
+            "dbt_cmd_global_flags": ["--cache-selected-only"],
         },
         profile_config=profile_config,
         execution_config=ExecutionConfig(
@@ -71,6 +73,7 @@ with DAG(
     ),
         operator_args={
             "append_env": True,
+            "dbt_cmd_global_flags": ["--cache-selected-only"],
         },
         profile_config=profile_config,
         execution_config=ExecutionConfig(
