@@ -53,7 +53,6 @@ with DAG(
     ),
         operator_args={
             "append_env": True,
-            "install_deps": True,
         },
         profile_config=profile_config,
         execution_config=ExecutionConfig(
@@ -72,7 +71,6 @@ with DAG(
     ),
         operator_args={
             "append_env": True,
-            "install_deps": True,
         },
         profile_config=profile_config,
         execution_config=ExecutionConfig(
@@ -88,5 +86,3 @@ with DAG(
     
 
     e1 >> seeds_tg >> stg_tg >> dbt_tg >> e2
-   
-
