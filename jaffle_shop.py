@@ -8,10 +8,10 @@ from cosmos.config import ProfileConfig, ProjectConfig, ExecutionConfig
 from cosmos.profiles import PostgresUserPasswordProfileMapping
 from pathlib import Path
 
-def on_failure_callback(context):
+def on_failure_callback(context,SVC_NAME):
     dag_run = context.get('dag_run')
     task_instances = dag_run.get_task_instances()
-    print("TASK_FAILED")
+    print(SVC_NAME)
 
 profile_config = ProfileConfig(
     profile_name="jaffle_shop",
@@ -67,7 +67,7 @@ with DAG(
         select=["path:models/staging/"],
     ),
         default_args={"retries": 1,
-                     'on_failure_callback': on_failure_callback,},
+                     'on_failure_callback': lambda context: on_failure_callback(context,"TEST_SVC_NAME"),},
         group_id = "dbt_stg_group"
     )
 
