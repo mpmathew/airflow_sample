@@ -10,19 +10,18 @@ from pathlib import Path
 
 def on_failure_callback(context,SVC_NAME):
     msg = """ 
-            *SVC*: {svc}
-            *Task*: {task}  
-            *Dag*: {dag}
-            *DagRun*: {dag_run}
-            *Execution Time*: {exec_date}  
-            *Log Url*: {log_url} 
+            SVC: {svc}
+            Dag: {dag}
+            Task: {task}
+            DagRun: {dag_run}
+            TaskInstance: {ti}
+            Execution Time: {exec_date} 
             """.format(
         svc=SVC_NAME,
         task=context.get("task_instance").task_id,
         dag=context.get("task_instance").dag_id,
         ti=context.get("task_instance"),
         exec_date=context.get("execution_date"),
-        log_url=context.get("task_instance").log_url,
         dag_run = context.get('dag_run'))
     print(msg)
 
