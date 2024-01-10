@@ -18,13 +18,14 @@ def on_failure_callback(context,SVC_NAME):
             Log Url: {log_url} 
             Execution Time: {exec_date} 
             """.format(
-        svc=SVC_NAME,
-        task=context.get("task_instance").task_id,
-        dag=context.get("task_instance").dag_id,
-        ti=context.get("task_instance"),
-        exec_date=context.get("execution_date"),
-        dag_run = context.get('dag_run')),
-        log_url=(context.get("task_instance").log_url).replace(log_url.split('/')[2],'mpmathew-test-poc.03907124.lowtouch.cloud')
+                svc=SVC_NAME,
+                task=context.get("task_instance").task_id,
+                dag=context.get("task_instance").dag_id,
+                ti=context.get("task_instance"),
+                exec_date=context.get("execution_date"),
+                dag_run = context.get('dag_run'),
+                log_url=(context.get("task_instance").log_url).replace(log_url.split('/')[2],'mpmathew-test-poc.03907124.lowtouch.cloud')
+            )
     print(msg)
 
 profile_config = ProfileConfig(
