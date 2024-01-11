@@ -16,7 +16,7 @@ def on_failure_callback(context,SVC_NAME):
     exec_date=context.get("execution_date")
     dag_run = context.get('dag_run')
     log_url = context.get("task_instance").log_url
-    log_url = log_url.replace(log_url.split('/')[2],'mpmathew-test-poc.03907124.lowtouch.cloud')
+    #log_url = log_url.replace(log_url.split('/')[2],'mpmathew-test-poc.03907124.lowtouch.cloud')
     msg = f""" 
             SVC: {svc}
             Dag: {dag}
