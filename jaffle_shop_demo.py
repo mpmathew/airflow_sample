@@ -20,8 +20,8 @@ with DAG(
     tags=["example","demo"],
 ):
     e1 = EmptyOperator(task_id="pre_dbt")
-
-     env_tg = DbtTaskGroup(
+    
+    env_tg = DbtTaskGroup(
         project_config=ProjectConfig(
         Path("/appz/home/airflow/dags/dbt/jaffle_shop"),
     ),
