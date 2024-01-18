@@ -94,4 +94,4 @@ with DAG(
     
     e2 = EmptyOperator(task_id="post_dbt")
 
-    e1 >> seeds_tg >> env_tg >> stg_tg >> dbt_tg >> e2
+    e1 >> seeds_tg >> stg_tg >> env_tg >> dbt_tg >> e2
