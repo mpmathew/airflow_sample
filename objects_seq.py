@@ -57,8 +57,3 @@ for subdir, dirs, files in os.walk(base_directory_path):
                         prev_task >> task  # Set dependency for sequential execution
                     
                     prev_task = task
-
-Functions = dag.task_group_dict['functions']
-Procedures = dag.task_group_dict['streams']
-Streams = dag.task_group_dict['streams']
-Functions >> Procedures >> Streams
