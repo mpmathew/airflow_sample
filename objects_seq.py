@@ -39,22 +39,19 @@ for subdir, dirs, files in os.walk(base_directory_path):
             if file.endswith('.sql'):
                 file_path = os.path.join(subdir, file)
                 task_id = f"{subdir_name}_{file.replace('.sql', '')}"
+                   
+                task = SnowflakeOperator(
+                    task_id=task_id,
+                    sql=file_path,
+                    snowflake_conn_id=SNOWFLAKE_CONN_ID,
+                    params={"schema_name": SNOWFLAKE_SCHEMA},
+                    dag=dag,
+                )
                 
-                with open(file_path, 'r') as f:
-                    sql_query = f.read()
-                    
-                    task = SnowflakeOperator(
-                        task_id=task_id,
-                        sql=file_path,
-                        snowflake_conn_id=SNOWFLAKE_CONN_ID,
-                        params={"schema_name": SNOWFLAKE_SCHEMA},
-                        dag=dag,
-                    )
-                    
-                    if prev_task:
-                        prev_task >> task 
-                    
-                    prev_task = task
+                if prev_task:
+                    prev_task >> task 
+                
+                prev_task = task
         task_groups[subdir_name] = tg
 
 # Set dependencies between TaskGroups
