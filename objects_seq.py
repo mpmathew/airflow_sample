@@ -10,7 +10,7 @@ SNOWFLAKE_SCHEMA = "TEST_DEV_DB.TEST_SCHEMA"
 
 # DAG configuration
 default_args = {
-  "owner": "airflow",
+  "owner": "mpmathew",
   "snowflake_conn_id": SNOWFLAKE_CONN_ID
 }
 dag = DAG(
