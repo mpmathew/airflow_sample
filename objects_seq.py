@@ -54,9 +54,3 @@ for subdir, dirs, files in os.walk(base_directory_path):
                         prev_task >> task  # Set dependency for sequential execution
                     
                     prev_task = task
-
-# If you need to set dependencies between TaskGroups, you can do so outside the loop
-# For example, if 'functions' should run before 'tables', you can add:
-# tg_functions = dag.task_group_dict['functions']
-# tg_tables = dag.task_group_dict['tables']
-# tg_functions >> tg_tables
