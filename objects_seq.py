@@ -26,12 +26,14 @@ base_directory_path = "/appz/home/airflow/dags/dbt/jaffle_shop/objects/"
 target_subdirs = ['functions', 'stored_proc', 'streams']
 
 for subdir, dirs, files in os.walk(base_directory_path):
+    # Skip the base directory itself
     if subdir == base_directory_path:
         continue
+    
     subdir_name = os.path.basename(subdir)
     if subdir_name not in target_subdirs:
         continue
-      
+    
     with TaskGroup(group_id=subdir_name, dag=dag) as tg:
         prev_task = None
         
