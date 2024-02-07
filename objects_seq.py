@@ -8,7 +8,7 @@ SNOWFLAKE_CONN_ID = "snowflake_connection"
 SNOWFLAKE_SCHEMA = "TEST_DEV_DB.TEST_SCHEMA"
 
 base_directory_path = "/appz/home/airflow/dags/dbt/jaffle_shop/objects/"
-parent_dir_name = os.path.basename(os.path.dirname(os.path.dirname(base_directory_path)))
+parent_dir_name = os.path.basename(os.path.dirname(base_directory_path))
 dynamic_dag_id = f"{parent_dir_name}_objects"
 
 default_args = {
@@ -24,6 +24,11 @@ dag = DAG(
 )
 
 target_subdirs = ['functions', 'stored_proc', 'streams']
+subdir_to_tg_name = {
+    'functions': 'Functions',
+    'stored_proc': 'Procedures',
+    'streams': 'Streams'
+}
 task_groups = {}
 
 for subdir, dirs, files in os.walk(base_directory_path):
@@ -31,13 +36,15 @@ for subdir, dirs, files in os.walk(base_directory_path):
     if subdir_name not in target_subdirs or subdir == base_directory_path:
         continue
     
-    with TaskGroup(group_id=subdir_name, dag=dag) as tg:
+    tg_name = subdir_to_tg_name.get(subdir_name, subdir_name)
+    
+    with TaskGroup(group_id=tg_name, dag=dag) as tg:
         prev_task = None
         
         for file in sorted(files):
             if file.endswith('.sql'):
                 file_path = os.path.join(subdir, file)
-                task_id = f"{subdir_name}_{file.replace('.sql', '')}"
+                task_id = f"{tg_name}_{file.replace('.sql', '')}"
                    
                 task = SnowflakeOperator(
                     task_id=task_id,
@@ -51,9 +58,10 @@ for subdir, dirs, files in os.walk(base_directory_path):
                     prev_task >> task 
                 
                 prev_task = task
-        task_groups[subdir_name] = tg
+        
+        task_groups[tg_name] = tg
 
-if 'functions' in task_groups and 'stored_proc' in task_groups:
-    task_groups['functions'] >> task_groups['stored_proc']
-if 'stored_proc' in task_groups and 'streams' in task_groups:
-    task_groups['stored_proc'] >> task_groups['streams']
+if 'Functions' in task_groups and 'Procedures' in task_groups:
+    task_groups['Functions'] >> task_groups['Procedures']
+if 'Procedures' in task_groups and 'Streams' in task_groups:
+    task_groups['Procedures'] >> task_groups['Streams']
