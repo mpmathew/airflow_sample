@@ -45,7 +45,7 @@ for subdir, dirs, files in os.walk(base_directory_path):
                     
                     task = SnowflakeOperator(
                         task_id=task_id,
-                        sql=sql_query,
+                        sql=file_path,
                         snowflake_conn_id=SNOWFLAKE_CONN_ID,
                         params={"schema_name": SNOWFLAKE_SCHEMA},
                         dag=dag,
