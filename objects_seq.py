@@ -7,24 +7,23 @@ import os
 SNOWFLAKE_CONN_ID = "snowflake_connection"
 SNOWFLAKE_SCHEMA = "TEST_DEV_DB.TEST_SCHEMA"
 
-# DAG configuration
+base_directory_path = "/appz/home/airflow/dags/dbt/jaffle_shop/objects/"
+parent_dir_name = os.path.basename(os.path.dirname(base_directory_path))
+dynamic_dag_id = f"{parent_dir_name}_objects"
+
 default_args = {
     "owner": "mpmathew",
     "snowflake_conn_id": SNOWFLAKE_CONN_ID,
 }
 dag = DAG(
-    'run_snowflake_sql_files_in_subdirectories',
+    dynamic_dag_id,
     default_args=default_args,
     description='Run SQL files in Snowflake, organized by subdirectories',
     schedule_interval=None,
     start_date=days_ago(1),
 )
 
-# Base directory path
-base_directory_path = "/appz/home/airflow/dags/dbt/jaffle_shop/objects/"
 target_subdirs = ['functions', 'stored_proc', 'streams']
-
-# Create an empty dictionary to hold TaskGroup references
 task_groups = {}
 
 for subdir, dirs, files in os.walk(base_directory_path):
@@ -54,7 +53,6 @@ for subdir, dirs, files in os.walk(base_directory_path):
                 prev_task = task
         task_groups[subdir_name] = tg
 
-# Set dependencies between TaskGroups
 if 'functions' in task_groups and 'stored_proc' in task_groups:
     task_groups['functions'] >> task_groups['stored_proc']
 if 'stored_proc' in task_groups and 'streams' in task_groups:
