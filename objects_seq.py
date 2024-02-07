@@ -8,7 +8,7 @@ SNOWFLAKE_CONN_ID = "snowflake_connection"
 SNOWFLAKE_SCHEMA = "TEST_DEV_DB.TEST_SCHEMA"
 
 base_directory_path = "/appz/home/airflow/dags/dbt/jaffle_shop/objects/"
-parent_dir_name = os.path.basename(os.path.dirname(base_directory_path))
+parent_dir_name = os.path.basename(os.path.dirname(os.path.dirname(base_directory_path)))
 dynamic_dag_id = f"{parent_dir_name}_objects"
 
 default_args = {
