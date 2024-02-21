@@ -42,13 +42,14 @@ def print_variable(**kwargs):
   print(variable)
 
 with DAG(
-    dag_id="jaffle_shop_new",
+    dag_id="jaffle_shop",
     start_date=datetime(2023, 11, 10),
     schedule=None,
     tags=["mpmathew"],
     default_args = {
     "owner": "mpmathew"
     },
+    catchup=False,
 ):
     e1 = PythonOperator(task_id = "print_variables",
                         python_callable = print_variable,
