@@ -17,7 +17,7 @@ with DAG(
     dag_id="jaffle_shop_demo",
     start_date=datetime(2023, 11, 10),
     schedule_interval="0 0 1 * *",
-    tags=["example","demo"],
+    tags=["mpmathew","demo"],
     default_args = {
     "owner": "mpmathew"
     },
