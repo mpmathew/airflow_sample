@@ -22,6 +22,7 @@ with DAG(
     default_args = {
     "owner": "mpmathew"
     },
+    catchup=False,
 ):
     e1 = EmptyOperator(task_id="pre_dbt")
 
