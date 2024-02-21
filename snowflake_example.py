@@ -26,7 +26,9 @@ with DAG(
     """,
     doc_md=__doc__,
     start_date=datetime(2022, 12, 1),
-    default_args={"snowflake_conn_id": SNOWFLAKE_CONN_ID},
+    default_args = {
+    "owner": "mpmathew",
+    "snowflake_conn_id": SNOWFLAKE_CONN_ID,
     schedule=None,
     # defining the directory where SQL templates are stored
     template_searchpath="/appz/home/airflow/dags/dbt/jaffle_shop/objects/tables/",
