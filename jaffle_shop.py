@@ -45,6 +45,9 @@ with DAG(
     dag_id="jaffle_shop_new",
     start_date=datetime(2023, 11, 10),
     schedule_interval="0 0 * 1 *",
+    default_args = {
+    "owner": "mpmathew"
+    },
 ):
     e1 = PythonOperator(task_id = "print_variables",
                         python_callable = print_variable,
