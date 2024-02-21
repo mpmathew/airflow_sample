@@ -18,6 +18,7 @@ default_args = {
 dag = DAG(
     dynamic_dag_id,
     default_args=default_args,
+    tags=["mpmathew","objects","dynamic"],
     description='Run SQL files in Snowflake, organized by subdirectories',
     schedule_interval=None,
     start_date=days_ago(1),
