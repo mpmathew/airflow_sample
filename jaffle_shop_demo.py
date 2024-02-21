@@ -7,7 +7,7 @@ from cosmos.constants import TestBehavior
 from airflow.models import Variable
 from pathlib import Path
 
-AIRFLOW_USER = "test_user"
+AIRFLOW_USER = "airflow"
 
 profile_config = ProfileConfig(
     profile_name="jaffle_shop",
