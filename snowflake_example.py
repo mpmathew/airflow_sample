@@ -30,6 +30,7 @@ with DAG(
     "owner": "mpmathew",
     "snowflake_conn_id": SNOWFLAKE_CONN_ID
     },
+    tags=["mpmathew","snowflake"],
     schedule=None,
     # defining the directory where SQL templates are stored
     template_searchpath="/appz/home/airflow/dags/dbt/jaffle_shop/objects/tables/",
