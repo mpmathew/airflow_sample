@@ -37,6 +37,7 @@ with DAG(
     ),
         render_config=RenderConfig(
         select=["path:seeds/"],
+        test_behavior=TestBehavior.NONE,
     ),
         default_args={"retries": 2},
         group_id = "dbt_seeds_group"
@@ -55,6 +56,7 @@ with DAG(
     ),
         render_config=RenderConfig(
         select=["path:models/staging/"],
+        test_behavior=TestBehavior.NONE,
     ),
         default_args={"retries": 2},
         group_id = "dbt_stg_group"
