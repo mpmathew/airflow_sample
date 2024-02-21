@@ -28,7 +28,7 @@ with DAG(
 
     seeds_tg = DbtTaskGroup(
         project_config=ProjectConfig(
-        Path("/appz/home/airflow/dags/dbt/jaffle_shop"),
+        dbt_project_path=Path("/appz/home/airflow/dags/dbt/jaffle_shop"),
         env_vars={"AIRFLOW_POSTGRES_TEST_USER": "airflow"},
     ),
         operator_args={
@@ -48,7 +48,7 @@ with DAG(
 
     stg_tg = DbtTaskGroup(
         project_config=ProjectConfig(
-        Path("/appz/home/airflow/dags/dbt/jaffle_shop"),
+        dbt_project_path=Path("/appz/home/airflow/dags/dbt/jaffle_shop"),
         env_vars={"AIRFLOW_POSTGRES_TEST_USER": "airflow"},
     ),
         operator_args={
@@ -68,7 +68,7 @@ with DAG(
 
     dbt_tg = DbtTaskGroup(
         project_config=ProjectConfig(
-        Path("/appz/home/airflow/dags/dbt/jaffle_shop"),
+        dbt_project_path=Path("/appz/home/airflow/dags/dbt/jaffle_shop"),
         env_vars={"AIRFLOW_POSTGRES_TEST_USER": "airflow"},
     ),
         operator_args={
