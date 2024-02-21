@@ -18,6 +18,9 @@ with DAG(
     start_date=datetime(2023, 11, 10),
     schedule_interval="0 0 1 * *",
     tags=["example","demo"],
+    default_args = {
+    "owner": "mpmathew"
+    },
 ):
     e1 = EmptyOperator(task_id="pre_dbt")
     
