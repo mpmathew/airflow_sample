@@ -23,24 +23,6 @@ with DAG(
     },
 ):
     e1 = EmptyOperator(task_id="pre_dbt")
-    
-    env_tg = DbtTaskGroup(
-        project_config=ProjectConfig(
-        Path("/appz/home/airflow/dags/dbt/jaffle_shop"),
-    ),
-        operator_args={
-            "append_env": True,
-        },
-        profile_config=profile_config,
-        execution_config=ExecutionConfig(
-        dbt_executable_path="/dbt_venv/bin/dbt",
-    ),
-        render_config=RenderConfig(
-        select=["path:models/intermediate/"],
-    ),
-        default_args={"retries": 2},
-        group_id = "dbt_env_group"
-    )
 
     seeds_tg = DbtTaskGroup(
         project_config=ProjectConfig(
@@ -97,4 +79,4 @@ with DAG(
     
     e2 = EmptyOperator(task_id="post_dbt")
 
-    e1 >> env_tg >> seeds_tg >> stg_tg  >> dbt_tg >> e2
+    e1 >> seeds_tg >> stg_tg  >> dbt_tg >> e2
