@@ -4,8 +4,10 @@ from airflow.operators.empty import EmptyOperator
 from cosmos import DbtTaskGroup, RenderConfig, LoadMode
 from cosmos.config import ProfileConfig, ProjectConfig, ExecutionConfig
 from cosmos.constants import TestBehavior
+from airflow.models import Variable
 from pathlib import Path
 
+AIRFLOW_USER = "test_user"
 
 profile_config = ProfileConfig(
     profile_name="jaffle_shop",
@@ -29,7 +31,7 @@ with DAG(
     seeds_tg = DbtTaskGroup(
         project_config=ProjectConfig(
         dbt_project_path=Path("/appz/home/airflow/dags/dbt/jaffle_shop"),
-        env_vars={"AIRFLOW_POSTGRES_TEST_USER": "airflow"},
+        env_vars={"AIRFLOW_POSTGRES_TEST_USER": AIRFLOW_USER},
     ),
         operator_args={
             "append_env": True,
@@ -50,7 +52,7 @@ with DAG(
     stg_tg = DbtTaskGroup(
         project_config=ProjectConfig(
         dbt_project_path=Path("/appz/home/airflow/dags/dbt/jaffle_shop"),
-        env_vars={"AIRFLOW_POSTGRES_TEST_USER": "airflow"},
+        env_vars={"AIRFLOW_POSTGRES_TEST_USER": AIRFLOW_USER},
     ),
         operator_args={
             "append_env": True,
@@ -71,7 +73,7 @@ with DAG(
     dbt_tg = DbtTaskGroup(
         project_config=ProjectConfig(
         dbt_project_path=Path("/appz/home/airflow/dags/dbt/jaffle_shop"),
-        env_vars={"AIRFLOW_POSTGRES_TEST_USER": "airflow"},
+        env_vars={"AIRFLOW_POSTGRES_TEST_USER": AIRFLOW_USER},
     ),
         operator_args={
             "append_env": True,
