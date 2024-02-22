@@ -1,29 +1,23 @@
-from airflow import DAG
-from airflow.operators.python_operator import PythonOperator
-from datetime import datetime
-import subprocess
+from pendulum import datetime
+from airflow.decorators import dag
+from airflow.operators.bash import BashOperator
 
-def generate_dbt_docs():
-    # Set the path to your virtual environment's activate script
-    # and your dbt project directory
-    dbt_dir = "/appz/home/airflow/dags/dbt/jaffle_shop"
-    command = "/dbt_venv/bin/dbt docs generate"
-    # Execute the dbt command
-    subprocess.run(command, cwd=dbt_dir, shell=True, check=True)
+PATH_TO_DBT_PROJECT = "/appz/home/airflow/dags/dbt/jaffle_shop"
+PATH_TO_DBT_VENV = "/dbt_venv/bin/dbt"
 
-default_args = {
-    'owner': 'airflow',
-    'start_date': datetime(2021, 1, 1),
-    'retries': 1,
-}
 
-dag = DAG('dbt_docs_generation_dag',
-          default_args=default_args,
-          schedule=None,
-          catchup=False)
-
-generate_docs_task = PythonOperator(
-    task_id='generate_dbt_docs',
-    python_callable=generate_dbt_docs,
-    dag=dag,
+@dag(
+    start_date=datetime(2023, 3, 23),
+    schedule=None,
+    catchup=False,
 )
+def simple_dbt_dag():
+    dbt_run = BashOperator(
+        task_id="dbt_run",
+        bash_command="source $PATH_TO_DBT_VENV && dbt docs generate",
+        env={"PATH_TO_DBT_VENV": PATH_TO_DBT_VENV},
+        cwd=PATH_TO_DBT_PROJECT,
+    )
+
+
+simple_dbt_dag()
