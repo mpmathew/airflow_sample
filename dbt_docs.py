@@ -30,26 +30,22 @@ with DAG(
 ):
     e1 = EmptyOperator(task_id="pre_dbt")
 
-    # seeds_tg = DbtTaskGroup(
-    #     project_config=ProjectConfig(
-    #     dbt_project_path=Path("/appz/home/airflow/dags/dbt/jaffle_shop"),
-    #     env_vars={"AIRFLOW_POSTGRES_TEST_USER": AIRFLOW_USER,"AIRFLOW_POSTGRES_TEST_PASSWORD": POSTGRES_TEST_PASSWORD},
-    # ),
-    #     # operator_args={
-    #     #     "append_env": True,
-    #     # },
-    #     profile_config=profile_config,
-    #     execution_config=ExecutionConfig(
-    #     dbt_executable_path="/dbt_venv/bin/dbt",
-    # ),
-    #     render_config=RenderConfig(
-    #     load_method=LoadMode.DBT_LS,
-    #     select=["path:seeds/"],
-    #     test_behavior=TestBehavior.NONE,
-    # ),
-    #     default_args={"retries": 2},
-    #     group_id = "dbt_seeds_group"
-    # )
+   docs_tg = DbtDocsOperator(
+        project_config=ProjectConfig(
+        dbt_project_path=Path("/appz/home/airflow/dags/dbt/jaffle_shop"),
+        env_vars={"AIRFLOW_POSTGRES_TEST_USER": AIRFLOW_USER,"AIRFLOW_POSTGRES_TEST_PASSWORD": POSTGRES_TEST_PASSWORD},
+    ),
+        profile_config=profile_config,
+        execution_config=ExecutionConfig(
+        dbt_executable_path="/dbt_venv/bin/dbt",
+    ),
+        render_config=RenderConfig(
+        load_method=LoadMode.DBT_LS,
+        test_behavior=TestBehavior.NONE,
+    ),
+        default_args={"retries": 2},
+        task_id = "dbt_docs"
+    )
   
     generate_dbt_docs = DbtDocsOperator(
         task_id="generate_dbt_docs",
