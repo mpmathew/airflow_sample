@@ -27,7 +27,7 @@ with DAG(
     
     generate_dbt_docs = DbtDocsOperator(
         task_id="generate_dbt_docs",
-        project_dir="path/to/jaffle_shop",
+        project_dir="/appz/home/airflow/dags/dbt/jaffle_shop",
         profile_config=profile_config,
         # docs-specific arguments
         #callback=upload_docs,
