@@ -30,36 +30,34 @@ with DAG(
 ):
     e1 = EmptyOperator(task_id="pre_dbt")
 
-    docs_tg = DbtDocsOperator(
-        project_dir="/appz/home/airflow/dags/dbt/jaffle_shop",
-        project_config=ProjectConfig(
-        dbt_project_path=Path("/appz/home/airflow/dags/dbt/jaffle_shop"),
-        env_vars={"AIRFLOW_POSTGRES_TEST_USER": AIRFLOW_USER,"AIRFLOW_POSTGRES_TEST_PASSWORD": POSTGRES_TEST_PASSWORD},
-    ),
-        profile_config=profile_config,
-        execution_config=ExecutionConfig(
-        dbt_executable_path="/dbt_venv/bin/dbt",
-    ),
-        render_config=RenderConfig(
-        load_method=LoadMode.DBT_LS,
-        test_behavior=TestBehavior.NONE,
-    ),
-        default_args={"retries": 2},
-        task_id = "dbt_docs"
-    )
-  
-    # generate_dbt_docs = DbtDocsOperator(
-    #     task_id="generate_dbt_docs",
+    # docs_tg = DbtDocsOperator(
     #     project_dir="/appz/home/airflow/dags/dbt/jaffle_shop",
+    #     project_config=ProjectConfig(
+    #     dbt_project_path=Path("/appz/home/airflow/dags/dbt/jaffle_shop"),
+    #     env_vars={"AIRFLOW_POSTGRES_TEST_USER": AIRFLOW_USER,"AIRFLOW_POSTGRES_TEST_PASSWORD": POSTGRES_TEST_PASSWORD},
+    # ),
     #     profile_config=profile_config,
     #     execution_config=ExecutionConfig(
-    #         dbt_executable_path="/dbt_venv/bin/dbt",
-    #     ),
-    #     # docs-specific arguments
-    #     # callback=upload_docs,
+    #     dbt_executable_path="/dbt_venv/bin/dbt",
+    # ),
+    #     render_config=RenderConfig(
+    #     load_method=LoadMode.DBT_LS,
+    #     test_behavior=TestBehavior.NONE,
+    # ),
+    #     default_args={"retries": 2},
+    #     task_id = "dbt_docs"
     # )
+  
+    generate_dbt_docs = DbtDocsOperator(
+        task_id="generate_dbt_docs",
+        project_dir="/appz/home/airflow/dags/dbt/jaffle_shop",
+        profile_config=profile_config,
+        dbt_bin="/dbt_venv/bin/dbt",
+        # docs-specific arguments
+        # callback=upload_docs,
+    )
 
     
     e2 = EmptyOperator(task_id="post_dbt")
 
-    e1 >> docs_tg >> e2
+    e1 >> generate_dbt_docs >> e2
