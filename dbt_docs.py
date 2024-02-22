@@ -17,11 +17,8 @@ default_args = {
     "owner": "mpmathew"
 }
 
-with DAG('dbt_docs_generation_dag', default_args=default_args, schedule_interval='@daily') as dag:
+with DAG('dbt_docs_generation_dag', default_args=default_args, schedule=None, tags=["mpmathew","docs"], catchup=False,) as dag:
     generate_dbt_docs = PythonOperator(
         task_id='generate_dbt_docs',
-        schedule=None,
-        tags=["mpmathew","demo"],
-        catchup=False,
         python_callable=run_dbt_docs
     )
