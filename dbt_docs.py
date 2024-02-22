@@ -30,7 +30,7 @@ with DAG(
 ):
     e1 = EmptyOperator(task_id="pre_dbt")
 
-   docs_tg = DbtDocsOperator(
+    docs_tg = DbtDocsOperator(
         project_config=ProjectConfig(
         dbt_project_path=Path("/appz/home/airflow/dags/dbt/jaffle_shop"),
         env_vars={"AIRFLOW_POSTGRES_TEST_USER": AIRFLOW_USER,"AIRFLOW_POSTGRES_TEST_PASSWORD": POSTGRES_TEST_PASSWORD},
