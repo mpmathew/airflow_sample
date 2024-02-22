@@ -47,18 +47,18 @@ with DAG(
         task_id = "dbt_docs"
     )
   
-    generate_dbt_docs = DbtDocsOperator(
-        task_id="generate_dbt_docs",
-        project_dir="/appz/home/airflow/dags/dbt/jaffle_shop",
-        profile_config=profile_config,
-        execution_config=ExecutionConfig(
-            dbt_executable_path="/dbt_venv/bin/dbt",
-        ),
-        # docs-specific arguments
-        # callback=upload_docs,
-    )
+    # generate_dbt_docs = DbtDocsOperator(
+    #     task_id="generate_dbt_docs",
+    #     project_dir="/appz/home/airflow/dags/dbt/jaffle_shop",
+    #     profile_config=profile_config,
+    #     execution_config=ExecutionConfig(
+    #         dbt_executable_path="/dbt_venv/bin/dbt",
+    #     ),
+    #     # docs-specific arguments
+    #     # callback=upload_docs,
+    # )
 
     
     e2 = EmptyOperator(task_id="post_dbt")
 
-    e1 >> generate_dbt_docs >> e2
+    e1 >> docs_tg >> e2
