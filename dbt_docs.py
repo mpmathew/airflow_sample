@@ -1,34 +1,29 @@
-from pendulum import datetime
 from airflow import DAG
-from airflow.operators.empty import EmptyOperator
-from cosmos import DbtTaskGroup, RenderConfig, LoadMode
-from cosmos.config import ProfileConfig, ProjectConfig, ExecutionConfig
-from cosmos.constants import TestBehavior
-from airflow.models import Variable
-from pathlib import Path
-from cosmos.operators import DbtDocsOperator
+from airflow.operators.python_operator import PythonOperator
+from datetime import datetime
+import subprocess
 
-profile_config = ProfileConfig(
-    profile_name="jaffle_shop",
-    target_name="dev",
-    profiles_yml_filepath = "/appz/home/airflow/dags/dbt/jaffle_shop/profiles.yml",
-)
+def generate_dbt_docs():
+    # Set the path to your virtual environment's activate script
+    # and your dbt project directory
+    dbt_dir = "/appz/home/airflow/dags/dbt/jaffle_shop"
+    command = "/dbt_venv/bin/dbt docs generate"
+    # Execute the dbt command
+    subprocess.run(command, cwd=dbt_dir, shell=True, check=True)
 
-with DAG(
-    dag_id="dbt_docs",
-    start_date=datetime(2023, 11, 10),
-    schedule=None,
-    tags=["mpmathew","docs"],
-    default_args = {
-    "owner": "mpmathew"
-    },
-    catchup=False,
-):
-    
-    generate_dbt_docs = DbtDocsOperator(
-        task_id="generate_dbt_docs",
-        project_dir="/appz/home/airflow/dags/dbt/jaffle_shop",
-        profile_config=profile_config,
-        # docs-specific arguments
-        #callback=upload_docs,
+default_args = {
+    'owner': 'airflow',
+    'start_date': datetime(2021, 1, 1),
+    'retries': 1,
+}
+
+dag = DAG('dbt_docs_generation_dag',
+          default_args=default_args,
+          schedule=None,
+          catchup=False)
+
+generate_docs_task = PythonOperator(
+    task_id='generate_dbt_docs',
+    python_callable=generate_dbt_docs,
+    dag=dag,
 )
