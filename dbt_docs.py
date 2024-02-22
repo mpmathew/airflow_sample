@@ -1,63 +1,27 @@
-from pendulum import datetime
 from airflow import DAG
-from airflow.operators.empty import EmptyOperator
-from cosmos import DbtTaskGroup, RenderConfig, LoadMode
-from cosmos.config import ProfileConfig, ProjectConfig, ExecutionConfig
-from cosmos.constants import TestBehavior
-from airflow.models import Variable
-from pathlib import Path
-from cosmos.operators import DbtDocsOperator
+from airflow.operators.python import PythonOperator
+from datetime import datetime
+import subprocess
+import os
 
-AIRFLOW_USER = "airflow"
-POSTGRES_TEST_PASSWORD = Variable.get("AIRFLOW_POSTGRES_TEST_PASSWORD")
+def run_dbt_docs():
+    # Set the DBT project directory
+    os.chdir('/appz/home/airflow/dags/dbt/jaffle_shop')
+    # Path to the DBT executable
+    dbt_executable_path = '/dbt_venv/bin/dbt'
+    # Running the DBT docs generate command
+    subprocess.run(f'{dbt_executable_path} docs generate', shell=True, check=True)
 
-profile_config = ProfileConfig(
-    profile_name="jaffle_shop",
-    target_name="dev",
-    profiles_yml_filepath = "/appz/home/airflow/dags/dbt/jaffle_shop/profiles.yml",
-)
-
-
-with DAG(
-    dag_id="dbt_docs",
-    start_date=datetime(2023, 11, 10),
-    schedule=None,
-    tags=["mpmathew","docs"],
-    default_args = {
+default_args = {
+    'start_date': datetime(2021, 1, 1),
     "owner": "mpmathew"
-    },
-    catchup=False,
-):
-    e1 = EmptyOperator(task_id="pre_dbt")
+}
 
-    # docs_tg = DbtDocsOperator(
-    #     project_dir="/appz/home/airflow/dags/dbt/jaffle_shop",
-    #     project_config=ProjectConfig(
-    #     dbt_project_path=Path("/appz/home/airflow/dags/dbt/jaffle_shop"),
-    #     env_vars={"AIRFLOW_POSTGRES_TEST_USER": AIRFLOW_USER,"AIRFLOW_POSTGRES_TEST_PASSWORD": POSTGRES_TEST_PASSWORD},
-    # ),
-    #     profile_config=profile_config,
-    #     execution_config=ExecutionConfig(
-    #     dbt_executable_path="/dbt_venv/bin/dbt",
-    # ),
-    #     render_config=RenderConfig(
-    #     load_method=LoadMode.DBT_LS,
-    #     test_behavior=TestBehavior.NONE,
-    # ),
-    #     default_args={"retries": 2},
-    #     task_id = "dbt_docs"
-    # )
-  
-    generate_dbt_docs = DbtDocsOperator(
-        task_id="generate_dbt_docs",
-        project_dir="/appz/home/airflow/dags/dbt/jaffle_shop",
-        profile_config=profile_config,
-        dbt_bin="/dbt_venv/bin/dbt",
-        # docs-specific arguments
-        # callback=upload_docs,
+with DAG('dbt_docs_generation_dag', default_args=default_args, schedule_interval='@daily') as dag:
+    generate_dbt_docs = PythonOperator(
+        task_id='generate_dbt_docs',
+        schedule=None,
+        tags=["mpmathew","demo"],
+        catchup=False,
+        python_callable=run_dbt_docs
     )
-
-    
-    e2 = EmptyOperator(task_id="post_dbt")
-
-    e1 >> generate_dbt_docs >> e2
