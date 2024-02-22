@@ -55,6 +55,9 @@ with DAG(
         task_id="generate_dbt_docs",
         project_dir="/appz/home/airflow/dags/dbt/jaffle_shop",
         profile_config=profile_config,
+        execution_config=ExecutionConfig(
+            dbt_executable_path="/dbt_venv/bin/dbt",
+        ),
         # docs-specific arguments
         # callback=upload_docs,
     )
