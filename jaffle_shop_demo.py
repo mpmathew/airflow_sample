@@ -1,4 +1,4 @@
-from pendulum import datetime
+from pendulum import datetime, timedelta
 from airflow import DAG
 from airflow.operators.empty import EmptyOperator
 from cosmos import DbtTaskGroup, RenderConfig, LoadMode
