@@ -18,13 +18,13 @@ profile_config = ProfileConfig(
 )
 
 default_args = {
-    start_date=datetime(2023, 1, 1),
     "owner": "mpmathew",
 }
 with DAG(
     dag_id="jaffle_shop_demo",
     tags=["mpmathew","demo"],
-    default_args = default_args,
+    start_date=datetime(2023, 1, 1),
+    default_args=default_args,
     timetable=USWorkdayTimetable("04:00", "'America/Los_Angeles'"),
     catchup=False,
 ):
