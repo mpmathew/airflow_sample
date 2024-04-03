@@ -23,7 +23,7 @@ default_args = {
 with DAG(
     dag_id="jaffle_shop_demo",
     tags=["mpmathew","demo"],
-    start_date=pendulum.datetime(2021, 1, 1, tz="PST"),
+    start_date=pendulum.datetime(2021, 1, 1, tz="America/Los_Angeles"),
     default_args=default_args,
     schedule=USWorkdayTimetable(Time(4)),
     catchup=False,
