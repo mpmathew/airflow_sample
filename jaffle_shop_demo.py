@@ -7,8 +7,8 @@ from cosmos.constants import TestBehavior
 from airflow.models import Variable
 from pathlib import Path
 
-AIRFLOW_USER = "airflow"
-POSTGRES_TEST_PASSWORD = Variable.get("AIRFLOW_POSTGRES_TEST_PASSWORD")
+# AIRFLOW_USER = "airflow"
+# POSTGRES_TEST_PASSWORD = Variable.get("AIRFLOW_POSTGRES_TEST_PASSWORD")
 
 profile_config = ProfileConfig(
     profile_name="jaffle_shop",
@@ -32,7 +32,7 @@ with DAG(
     seeds_tg = DbtTaskGroup(
         project_config=ProjectConfig(
         dbt_project_path=Path("/appz/home/airflow/dags/dbt/jaffle_shop"),
-        env_vars={"AIRFLOW_POSTGRES_TEST_USER": AIRFLOW_USER,"AIRFLOW_POSTGRES_TEST_PASSWORD": POSTGRES_TEST_PASSWORD},
+        # env_vars={"AIRFLOW_POSTGRES_TEST_USER": AIRFLOW_USER,"AIRFLOW_POSTGRES_TEST_PASSWORD": POSTGRES_TEST_PASSWORD},
     ),
         # operator_args={
         #     "append_env": True,
@@ -53,7 +53,7 @@ with DAG(
     stg_tg = DbtTaskGroup(
         project_config=ProjectConfig(
         dbt_project_path=Path("/appz/home/airflow/dags/dbt/jaffle_shop"),
-        env_vars={"AIRFLOW_POSTGRES_TEST_USER": AIRFLOW_USER,"AIRFLOW_POSTGRES_TEST_PASSWORD": POSTGRES_TEST_PASSWORD},
+        # env_vars={"AIRFLOW_POSTGRES_TEST_USER": AIRFLOW_USER,"AIRFLOW_POSTGRES_TEST_PASSWORD": POSTGRES_TEST_PASSWORD},
     ),
         # operator_args={
         #     "append_env": True,
@@ -74,7 +74,7 @@ with DAG(
     dbt_tg = DbtTaskGroup(
         project_config=ProjectConfig(
         dbt_project_path=Path("/appz/home/airflow/dags/dbt/jaffle_shop"),
-        env_vars={"AIRFLOW_POSTGRES_TEST_USER": AIRFLOW_USER,"AIRFLOW_POSTGRES_TEST_PASSWORD": POSTGRES_TEST_PASSWORD},
+        # env_vars={"AIRFLOW_POSTGRES_TEST_USER": AIRFLOW_USER,"AIRFLOW_POSTGRES_TEST_PASSWORD": POSTGRES_TEST_PASSWORD},
     ),
         # operator_args={
         #     "append_env": True,
