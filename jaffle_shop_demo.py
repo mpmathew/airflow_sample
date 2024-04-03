@@ -1,4 +1,4 @@
-from pendulum import datetime
+import pendulum
 from airflow import DAG
 from airflow.operators.empty import EmptyOperator
 from cosmos import DbtTaskGroup, RenderConfig, LoadMode
@@ -18,14 +18,14 @@ profile_config = ProfileConfig(
 )
 
 default_args = {
-    'start_date': datetime(2023, 1, 1,4,0, tz='America/Los_Angeles'),
+    'start_date': pendulum.datetime(2023, 1, 1,4,0, tz='America/Los_Angeles'),
     "owner": "mpmathew",
 }
 with DAG(
     dag_id="jaffle_shop_demo",
     tags=["mpmathew","demo"],
     default_args = default_args,
-    timetable=USWorkingDaysTimetable(),
+    schedule = USWorkingDaysTimetable(),
     catchup=False,
 ):
     e1 = EmptyOperator(task_id="pre_dbt")
