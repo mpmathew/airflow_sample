@@ -1,4 +1,4 @@
-import pendulum
+from datetime import datetime
 from airflow import DAG
 from airflow.operators.empty import EmptyOperator
 from cosmos import DbtTaskGroup, RenderConfig, LoadMode
@@ -6,7 +6,7 @@ from cosmos.config import ProfileConfig, ProjectConfig, ExecutionConfig
 from cosmos.constants import TestBehavior
 from airflow.models import Variable
 from pathlib import Path
-from us_working_days_timetable import USWorkingDaysTimetable
+from us_working_days_timetable import USWorkdayTimetable
 
 # AIRFLOW_USER = "airflow"
 # POSTGRES_TEST_PASSWORD = Variable.get("AIRFLOW_POSTGRES_TEST_PASSWORD")
@@ -18,14 +18,14 @@ profile_config = ProfileConfig(
 )
 
 default_args = {
-    'start_date': pendulum.datetime(2023, 1, 1,4,0, tz='America/Los_Angeles'),
+    start_date=datetime(2023, 1, 1),
     "owner": "mpmathew",
 }
 with DAG(
     dag_id="jaffle_shop_demo",
     tags=["mpmathew","demo"],
     default_args = default_args,
-    schedule = USWorkingDaysTimetable(),
+    timetable=USWorkdayTimetable("04:00", "'America/Los_Angeles'"),
     catchup=False,
 ):
     e1 = EmptyOperator(task_id="pre_dbt")
