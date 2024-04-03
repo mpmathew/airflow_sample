@@ -18,7 +18,7 @@ profile_config = ProfileConfig(
 )
 
 default_args = {
-    'start_date': datetime(2023, 1, 1, tz='America/Los_Angeles'),
+    'start_date': datetime(2023, 1, 1,4,0, tz='America/Los_Angeles'),
     "owner": "mpmathew",
 }
 with DAG(
@@ -26,6 +26,7 @@ with DAG(
     tags=["mpmathew","demo"],
     default_args = default_args,
     timetable=USWorkingDaysTimetable(),
+    schedule_interval=timedelta(days=1),
     catchup=False,
 ):
     e1 = EmptyOperator(task_id="pre_dbt")
