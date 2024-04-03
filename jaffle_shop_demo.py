@@ -1,5 +1,4 @@
 from pendulum import datetime
-from datetime import timedelta
 from airflow import DAG
 from airflow.operators.empty import EmptyOperator
 from cosmos import DbtTaskGroup, RenderConfig, LoadMode
@@ -27,7 +26,6 @@ with DAG(
     tags=["mpmathew","demo"],
     default_args = default_args,
     timetable=USWorkingDaysTimetable(),
-    schedule_interval=timedelta(days=1),
     catchup=False,
 ):
     e1 = EmptyOperator(task_id="pre_dbt")
