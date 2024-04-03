@@ -18,7 +18,7 @@ profile_config = ProfileConfig(
 )
 
 default_args = {
-    'start_date': pendulum.datetime(2023, 1, 1, tz='America/Los_Angeles'),
+    'start_date': datetime(2023, 1, 1, tz='America/Los_Angeles'),
     "owner": "mpmathew",
 }
 with DAG(
