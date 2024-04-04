@@ -24,9 +24,9 @@ default_args = {
 with DAG(
     dag_id="jaffle_shop_demo",
     tags=["mpmathew","demo"],
-    start_date=pendulum.datetime(2021, 1, 1, tz="America/Los_Angeles"),
+    start_date=pendulum.datetime(2024, 1, 1, tz="America/Los_Angeles"),
     default_args=default_args,
-    schedule=USWorkdayTimetable(Time(4:30)),
+    schedule=USWorkdayTimetable(Time(4,30)),
     catchup=False,
 ):
     e1 = EmptyOperator(task_id="pre_dbt")
