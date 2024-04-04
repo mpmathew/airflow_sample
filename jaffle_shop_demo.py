@@ -26,7 +26,7 @@ with DAG(
     tags=["mpmathew","demo"],
     start_date=pendulum.datetime(2024, 1, 1, tz="America/Los_Angeles"),
     default_args=default_args,
-    schedule=USWorkdayTimetable(Time(23,32)),
+    schedule=USWorkdayTimetable(Time(1,30)),
     catchup=False,
 ):
     e1 = EmptyOperator(task_id="pre_dbt")
