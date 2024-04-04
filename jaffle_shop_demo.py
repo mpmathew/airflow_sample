@@ -36,9 +36,9 @@ with DAG(
         dbt_project_path=Path("/appz/home/airflow/dags/dbt/jaffle_shop"),
         # env_vars={"AIRFLOW_POSTGRES_TEST_USER": AIRFLOW_USER,"AIRFLOW_POSTGRES_TEST_PASSWORD": POSTGRES_TEST_PASSWORD},
     ),
-        # operator_args={
-        #     "append_env": True,
-        # },
+        operator_args={
+            "append_env": True,
+        },
         profile_config=profile_config,
         execution_config=ExecutionConfig(
         dbt_executable_path="/dbt_venv/bin/dbt",
@@ -57,9 +57,9 @@ with DAG(
         dbt_project_path=Path("/appz/home/airflow/dags/dbt/jaffle_shop"),
         # env_vars={"AIRFLOW_POSTGRES_TEST_USER": AIRFLOW_USER,"AIRFLOW_POSTGRES_TEST_PASSWORD": POSTGRES_TEST_PASSWORD},
     ),
-        # operator_args={
-        #     "append_env": True,
-        # },
+        operator_args={
+            "append_env": True,
+        },
         profile_config=profile_config,
         execution_config=ExecutionConfig(
         dbt_executable_path="/dbt_venv/bin/dbt",
@@ -78,9 +78,9 @@ with DAG(
         dbt_project_path=Path("/appz/home/airflow/dags/dbt/jaffle_shop"),
         # env_vars={"AIRFLOW_POSTGRES_TEST_USER": AIRFLOW_USER,"AIRFLOW_POSTGRES_TEST_PASSWORD": POSTGRES_TEST_PASSWORD},
     ),
-        # operator_args={
-        #     "append_env": True,
-        # },
+        operator_args={
+            "append_env": True,
+        },
         profile_config=profile_config,
         execution_config=ExecutionConfig(
         dbt_executable_path="/dbt_venv/bin/dbt",
