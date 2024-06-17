@@ -121,4 +121,3 @@ with DAG(
     
 
     e1 >> seeds_tg >> send_email >> stg_tg >> dbt_tg >> e2
-#test commit
