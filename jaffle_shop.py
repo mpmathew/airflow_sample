@@ -110,14 +110,15 @@ with DAG(
         default_args={"retries": 2},
     )
     
-    send_email = EmailOperator( 
-        task_id='send_email', 
-        to='mpmathew@ecloudcontrol.com', 
-        subject='test email for airflow', 
-        html_content="Date: {{ ds }}", 
-    )
+    # send_email = EmailOperator( 
+    #     task_id='send_email', 
+    #     to='mpmathew@ecloudcontrol.com', 
+    #     subject='test email for airflow', 
+    #     html_content="Date: {{ ds }}", 
+    # )
    
     e2 = EmptyOperator(task_id="post_dbt")
     
 
-    e1 >> seeds_tg >> send_email >> stg_tg >> dbt_tg >> e2
+    #e1 >> seeds_tg >> send_email >> stg_tg >> dbt_tg >> e2
+e1 >> seeds_tg >> stg_tg >> dbt_tg >> e2
