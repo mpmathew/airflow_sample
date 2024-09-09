@@ -44,7 +44,7 @@ def print_variable(**kwargs):
 with DAG(
     dag_id="jaffle_shop",
     start_date=datetime(2023, 11, 10),
-    schedule=None,
+    schedule=0/5 * * * *,
     tags=["mpmathew"],
     default_args = {
     "owner": "mpmathew"
