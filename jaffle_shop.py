@@ -99,7 +99,7 @@ with DAG(
     ),
         operator_args={
             "append_env": True,
-            "queue": "on-premises",
+           # "queue": "on-premises",
         },
         profile_config=profile_config,
         execution_config=ExecutionConfig(
