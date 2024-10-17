@@ -64,7 +64,7 @@ with DAG(
         dbt_executable_path="/dbt_venv/bin/dbt",
     ),
         render_config=RenderConfig(
-        load_method=LoadMode.DBT_LS,
+        # load_method=LoadMode.DBT_LS,
         select=["path:seeds/"],
         test_behavior=TestBehavior.NONE,
     ),
@@ -81,7 +81,7 @@ with DAG(
         render_config=RenderConfig(
         # load_method=LoadMode.DBT_LS,
         select=["path:models/staging/"],
-        test_behavior=TestBehavior.NONE,
+        test_behavior=TestBehavior.AFTER_ALL,
     ),
         default_args={"retries": 2},
         group_id = "dbt_stg_group"
@@ -94,7 +94,7 @@ with DAG(
         dbt_executable_path="/dbt_venv/bin/dbt",
     ),
         render_config=RenderConfig(
-        load_method=LoadMode.DBT_LS,
+        # load_method=LoadMode.DBT_LS,
         exclude=["path:models/staging","path:models/intermediate","path:seeds/"],
     ),
         default_args={"retries": 2},
