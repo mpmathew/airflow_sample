@@ -79,7 +79,7 @@ with DAG(
         dbt_executable_path="/dbt_venv/bin/dbt",
     ),
         render_config=RenderConfig(
-        load_method=LoadMode.DBT_LS,
+        # load_method=LoadMode.DBT_LS,
         select=["path:models/staging/"],
         test_behavior=TestBehavior.NONE,
     ),
