@@ -13,7 +13,7 @@ from pathlib import Path
 POSTGRES_USER = Variable.get("AIRFLOW_VAR_POSTGRES_USER", "test_user")
 POSTGRES_PASSWORD = Variable.get("AIRFLOW_VAR_POSTGRES_PASSWORD")
 DBT_VAR_STG_ORDR_NAME = "stg_orders"
-DBT_VAR_ID_NAME = "id_name"
+DBT_VAR_ID_NAME = "customer_id"
 
 
 ## Profile config 
