@@ -78,7 +78,7 @@ with DAG(
     dbt_tg = DbtTaskGroup(
         project_config=ProjectConfig(
         dbt_project_path=Path("/appz/home/airflow/dags/dbt/jaffle_shop"),
-        env_vars={"AIRFLOW_POSTGRES_TEST_USER": AIRFLOW_USER,"AIRFLOW_POSTGRES_TEST_PASSWORD": POSTGRES_TEST_PASSWORD},
+        env_vars={"AIRFLOW_ENV_POSTGRES_USER": AIRFLOW_USER,"AIRFLOW_ENV_POSTGRES_PASSWORD": POSTGRES_TEST_PASSWORD},
     ),
         # operator_args={
         #     "append_env": True,
