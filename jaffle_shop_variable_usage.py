@@ -12,8 +12,8 @@ from pathlib import Path
 ## Variables defined
 POSTGRES_USER = Variable.get("AIRFLOW_VAR_POSTGRES_USER", "test_user")
 POSTGRES_PASSWORD = Variable.get("AIRFLOW_VAR_POSTGRES_PASSWORD")
-DBT_VAR_STG_ORDR_NAME = "stg_orders_"
-DBT_VAR_ID_NAME = "id_name_"
+DBT_VAR_STG_ORDR_NAME = "stg_orders"
+DBT_VAR_ID_NAME = "id_name"
 
 
 ## Profile config 
