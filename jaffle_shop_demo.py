@@ -9,8 +9,8 @@ from airflow.models import Variable
 from pathlib import Path
 #from us_working_days_timetable import USWorkdayTimetable
 
-AIRFLOW_USER = "airflow"
-POSTGRES_TEST_PASSWORD = Variable.get("AIRFLOW_POSTGRES_TEST_PASSWORD")
+POSTGRES_USER = "airflow"
+POSTGRES_PASSWORD = Variable.get("AIRFLOW_VAR_POSTGRES_PASSWORD")
 
 profile_config = ProfileConfig(
     profile_name="jaffle_shop",
@@ -78,7 +78,7 @@ with DAG(
     dbt_tg = DbtTaskGroup(
         project_config=ProjectConfig(
         dbt_project_path=Path("/appz/home/airflow/dags/dbt/jaffle_shop"),
-        env_vars={"AIRFLOW_ENV_POSTGRES_USER": AIRFLOW_USER,"AIRFLOW_ENV_POSTGRES_PASSWORD": POSTGRES_TEST_PASSWORD},
+        env_vars={"AIRFLOW_POSTGRES_USER": POSTGRES_USER,"AIRFLOW_POSTGRES_PASSWORD": POSTGRES_PASSWORD},
     ),
         # operator_args={
         #     "append_env": True,
