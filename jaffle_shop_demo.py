@@ -7,7 +7,7 @@ from cosmos.config import ProfileConfig, ProjectConfig, ExecutionConfig
 from cosmos.constants import TestBehavior
 from airflow.models import Variable
 from pathlib import Path
-from us_working_days_timetable import USWorkdayTimetable
+#from us_working_days_timetable import USWorkdayTimetable
 
 # AIRFLOW_USER = "airflow"
 # POSTGRES_TEST_PASSWORD = Variable.get("AIRFLOW_POSTGRES_TEST_PASSWORD")
@@ -24,9 +24,11 @@ default_args = {
 with DAG(
     dag_id="jaffle_shop_demo",
     tags=["mpmathew","demo"],
-    start_date=pendulum.datetime(2024, 1, 1, tz="America/Los_Angeles"),
+    #start_date=pendulum.datetime(2024, 1, 1, tz="America/Los_Angeles"),
+    start_date=datetime(2023, 11, 10),
     default_args=default_args,
-    schedule=USWorkdayTimetable(Time(1,30)),
+    #schedule=USWorkdayTimetable(Time(1,30)),
+    schedule='0 0/12 * * *',
     catchup=False,
 ):
     e1 = EmptyOperator(task_id="pre_dbt")
@@ -95,4 +97,3 @@ with DAG(
     e2 = EmptyOperator(task_id="post_dbt")
 
     e1 >> seeds_tg >> stg_tg  >> dbt_tg >> e2
-    #testing gitrunner
