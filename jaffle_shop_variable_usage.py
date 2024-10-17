@@ -42,7 +42,7 @@ default_args = {
 
 
 with DAG(
-    dag_id="JAFFLE SHOP VAR/ENV_VAR DEMO",
+    dag_id="JAFFLE_SHOP_ENV_VAR_DEMO",
     tags=["mpmathew","sample","var/env_var usage"],
     start_date=datetime(2023, 11, 10),
     default_args=default_args,
