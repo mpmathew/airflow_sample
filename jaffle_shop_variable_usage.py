@@ -10,8 +10,8 @@ from pathlib import Path
 
 
 ## Variables defined
-POSTGRES_USER = Variable.get("AIRFLOW_VAR_POSTGRES_USER", "test_user")
-POSTGRES_PASSWORD = Variable.get("AIRFLOW_VAR_POSTGRES_PASSWORD")
+ENV_VAR_POSTGRES_USER = Variable.get("AIRFLOW_VAR_POSTGRES_USER", "test_user")
+ENV_VAR_POSTGRES_PASSWORD = Variable.get("AIRFLOW_VAR_POSTGRES_PASSWORD")
 DBT_VAR_STG_ORDR_NAME = "stg_orders"
 DBT_VAR_ID_NAME = "customer_id"
 
@@ -30,10 +30,10 @@ project_config_1 = ProjectConfig(
 )
 
 
-## Project config 2 - env_vars defined
+## Project config 2 - dbt_vars and env_vars defined
 project_config_2 = ProjectConfig(
         dbt_project_path=Path("/appz/home/airflow/dags/dbt/jaffle_shop"),
-        env_vars={"AIRFLOW_POSTGRES_USER": POSTGRES_USER,"AIRFLOW_POSTGRES_PASSWORD": POSTGRES_PASSWORD},
+        env_vars={"AIRFLOW_POSTGRES_USER": ENV_VAR_POSTGRES_USER,"AIRFLOW_POSTGRES_PASSWORD": ENV_VAR_POSTGRES_PASSWORD},
         dbt_vars={"staging_order_name": DBT_VAR_STG_ORDR_NAME,"id_name": DBT_VAR_ID_NAME},
 )
 
