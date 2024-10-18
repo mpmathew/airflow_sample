@@ -8,3 +8,4 @@ TAGS:
 SCHEMAS:
   - "SCHEMA_TEST"
   - "SCHEMA_A"
+  - "SCHEMA_NULL"
