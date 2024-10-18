@@ -7,3 +7,4 @@ TAGS:
   - "dynamic"
 SCHEMAS:
   - "SCHEMA_TEST"
+  - "SCHEMA_A"
