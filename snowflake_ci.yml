@@ -5,3 +5,5 @@ TAGS:
   - "mpmathew"
   - "objects"
   - "dynamic"
+SCHEMAS:
+  - "SCHEMA_TEST"
