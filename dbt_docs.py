@@ -15,13 +15,13 @@ PATH_TO_DBT_VENV = "/dbt_venv/bin/dbt"
     schedule=None,
     catchup=False,
 )
-def simple_dbt_dag():
+def simple_dbt_dag_doc():
     dbt_run = BashOperator(
-        task_id="dbt_run",
+        task_id="dbt_doc",
         bash_command="$PATH_TO_DBT_VENV docs generate",
         env={"PATH_TO_DBT_VENV": PATH_TO_DBT_VENV},
         cwd=PATH_TO_DBT_PROJECT,
     )
 
 
-simple_dbt_dag()
+simple_dbt_dag_doc()
